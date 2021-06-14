@@ -1,6 +1,3 @@
-// Variables for total cells, each cell holding a direction
-let numHorizontalCells = 50;
-let numVerticalCells = 40;
 let grid: Grid;
 
 // Possible states, gotten 
@@ -17,7 +14,7 @@ function setup() {
   background(255);
 
   // create a grid
-  grid = new Grid(numHorizontalCells, numVerticalCells);
+  grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
 }
 
 // automatically called function to make canvas resize with window
@@ -33,13 +30,20 @@ function draw() {
   const state = getCurrentState();
   grid.draw(state);
 
-  // const randX = random(0, windowWidth);
-  // const randY = random(0, windowHeight);
-  // rect(randX, randY, 10, 10)
+  updateFps();
 }
 
 // function to get the current state from selector
 function getCurrentState(): State {
   const selector: any = document.getElementById('state-selector');
   return selector.value;
+}
+
+// update the fps counter in the sidebar
+function updateFps(): void {
+    // only update it when sidebar is shown
+    if (eval(document.getElementById('sidebar').style.width.charAt(0))){
+        document.getElementById('fps').innerHTML = frameRate().toFixed(0).toString();
+    }
+    
 }

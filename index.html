@@ -6,7 +6,9 @@
 
   <link rel="stylesheet" href="style.css">
 
+  <script src="src/settings.js"></script>
   <script src="src/sidebar.js"></script>
+  <script src="src/particleSystem.js"></script>
   <script src="src/grid.js"></script>
   <script src="src/sketch.js"></script>
 
@@ -15,6 +17,7 @@
 </head>
 
 <!-- <body onload="openSidebar()"> -->
+
 <body>
   <div id="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
@@ -27,6 +30,9 @@
     <a href="https://github.com/DukeBas/PerlinVectorFields">
       <img src="GitHub-light.png" alt="Github link" id="GitHub">
     </a>
+    <div id="fps-container"></div>
+    <span id="fps">0</span>
+    <span> fps</span>
   </div>
 </body>
 

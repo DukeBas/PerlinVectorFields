@@ -9,26 +9,26 @@ var Grid = (function () {
         this.generateNoisedCells();
     }
     Grid.prototype.generateRandomCells = function () {
-        for (var i = 0; i < numHorizontalCells; i++) {
+        for (var i = 0; i < this.hor; i++) {
             this.cells[i] = [];
-            for (var j = 0; j < numHorizontalCells; j++) {
+            for (var j = 0; j < this.vert; j++) {
                 var direction = random(0, 360);
                 this.cells[i][j] = { dir: direction };
             }
         }
     };
     Grid.prototype.generateNoisedCells = function () {
-        for (var i = 0; i < numHorizontalCells; i++) {
+        for (var i = 0; i < this.hor; i++) {
             this.cells[i] = [];
-            for (var j = 0; j < numHorizontalCells; j++) {
+            for (var j = 0; j < this.vert; j++) {
                 var direction = noise(i / 25, j / 25) * 360;
                 this.cells[i][j] = { dir: direction };
             }
         }
     };
     Grid.prototype.noiseStep = function () {
-        for (var i = 0; i < numHorizontalCells; i++) {
-            for (var j = 0; j < numHorizontalCells; j++) {
+        for (var i = 0; i < this.hor; i++) {
+            for (var j = 0; j < this.vert; j++) {
                 var direction = noise(i / 25, j / 25, frameCount / 50) * 360;
                 this.cells[i][j] = { dir: direction };
             }

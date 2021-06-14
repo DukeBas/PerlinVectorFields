@@ -22,9 +22,9 @@ class Grid {
 
   // generates cells with random direction
   generateRandomCells() {
-    for (let i = 0; i < numHorizontalCells; i++) {
+    for (let i = 0; i < this.hor; i++) {
       this.cells[i] = [];
-      for (let j = 0; j < numHorizontalCells; j++) {
+      for (let j = 0; j < this.vert; j++) {
         const direction = random(0, 360);
         this.cells[i][j] = { dir: direction };
       }
@@ -33,9 +33,9 @@ class Grid {
 
   // generates cells with 2d perlin noise based direction
   generateNoisedCells() {
-    for (let i = 0; i < numHorizontalCells; i++) {
+    for (let i = 0; i < this.hor; i++) {
       this.cells[i] = [];
-      for (let j = 0; j < numHorizontalCells; j++) {
+      for (let j = 0; j < this.vert; j++) {
         const direction = noise(i / 25, j / 25) * 360;
         this.cells[i][j] = { dir: direction };
       }
@@ -44,8 +44,8 @@ class Grid {
 
   // use 3d noise, for time dimension
   noiseStep() {
-    for (let i = 0; i < numHorizontalCells; i++) {
-      for (let j = 0; j < numHorizontalCells; j++) {
+    for (let i = 0; i < this.hor; i++) {
+      for (let j = 0; j < this.vert; j++) {
         const direction = noise(i / 25, j / 25, frameCount/50) * 360;
         this.cells[i][j] = { dir: direction };
       }
@@ -73,7 +73,6 @@ class Grid {
             const locX = i * cellWidth;
             const locY = j * cellHeight;
 
-            // rect(locX, locY, cellWidth, cellHeight);
             line(locX + cellWidth / 2,
               locY + cellHeight / 2,
               locX + cellWidth / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))),
