@@ -96,8 +96,10 @@ class Grid {
         }
         break;
     }
+  }
 
-
-
+  // returns cell at i,j in cells array
+  getCellAt(i: number, j: number): Cell {
+    return this.cells[i][j];
   }
 }

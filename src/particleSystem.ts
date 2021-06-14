@@ -1,3 +1,7 @@
+// TODO:
+// Switch everything to p5 vectors
+// implement either a friction system or a simple max speed (scale to length x) 
+
 class Particle {
   x: number;  // x part of location coordinate
   y: number;  // y part of location coordinate
@@ -7,11 +11,10 @@ class Particle {
   prevY: number;  // last y location
 
   constructor(x: number, y: number) {
-    this
     this.x = x;
     this.y = y;
-    this.dx = random(-10, 10);
-    this.dy = random(-10, 10);
+    this.dx = 0;
+    this.dy = 0;
     this.prevX = x;
     this.prevY = y;
   }
@@ -21,9 +24,10 @@ class Particle {
     this.dy = dy;
   }
 
-  increaseSpeed(ddx: number, ddy: number): void {
-    this.dx += ddx;
-    this.dy += ddy;
+  // takes a direction and adds speed to this particle in that direction
+  accelerate(dir: number): void {
+    this.dx += Math.cos(dir * (Math.PI / 180)) * settings.fieldStrength;
+    this.dy += Math.sin(dir * (Math.PI / 180)) * settings.fieldStrength;
   }
 
   // adds x and y speed values to x and y location values
@@ -35,20 +39,20 @@ class Particle {
 
     // out of screen detection / wrapping
     if (this.x > width) {
-      this.x = 0;
-      this.prevX = 0;
+      this.x = 0.5;
+      this.prevX = 0.5;
     }
     if (this.x < 0) {
-      this.x = width;
-      this.prevX = width;
+      this.x = width - 0.5;
+      this.prevX = width - 0.5;
     }
     if (this. y > height){
-      this.y = 0;
-      this.prevY = 0;
+      this.y = 0.5;
+      this.prevY = 0.5;
     }
     if (this.y < 0){
-      this.y = height;
-      this.prevY = height;
+      this.y = height -0.5;
+      this.prevY = height -0.5;
     }
   }
 
@@ -85,14 +89,23 @@ class ParticleSystem {
   }
 
   // updates the particles positions according to their speed, and updates their speed according to their location
-  updatePositions() {
+  updatePositions(grid: Grid) {
     this.particles.forEach((p) => {
       // change location, apply speed
       p.applySpeed();
       // change speed, apply acceleration based on location (direction of closest vector)
-      // TODO
+      p.accelerate(getNearestDirection(p.x, p.y, grid))
     });
   }
+}
+
+// takes x and y and returns the direction of the nearest vector
+function getNearestDirection(x: number, y: number, grid: Grid): number {
+  let cellWidth = width / settings.numHorizontalCells;
+  let cellHeight = height / settings.numVerticalCells;
+  const i = Math.floor(x/cellWidth);
+  const j = Math.floor(y/cellHeight);
+  return grid.getCellAt(i, j).dir;
 }
 
 // generates a random (x) value between 0 and the screen width (in pixels)

@@ -1,10 +1,9 @@
 var Particle = (function () {
     function Particle(x, y) {
-        this;
         this.x = x;
         this.y = y;
-        this.dx = random(-10, 10);
-        this.dy = random(-10, 10);
+        this.dx = 0;
+        this.dy = 0;
         this.prevX = x;
         this.prevY = y;
     }
@@ -12,9 +11,9 @@ var Particle = (function () {
         this.dx = dx;
         this.dy = dy;
     };
-    Particle.prototype.increaseSpeed = function (ddx, ddy) {
-        this.dx += ddx;
-        this.dy += ddy;
+    Particle.prototype.accelerate = function (dir) {
+        this.dx += Math.cos(dir * (Math.PI / 180)) * settings.fieldStrength;
+        this.dy += Math.sin(dir * (Math.PI / 180)) * settings.fieldStrength;
     };
     Particle.prototype.applySpeed = function () {
         this.prevX = this.x;
@@ -22,20 +21,20 @@ var Particle = (function () {
         this.x += this.dx;
         this.y += this.dy;
         if (this.x > width) {
-            this.x = 0;
-            this.prevX = 0;
+            this.x = 0.5;
+            this.prevX = 0.5;
         }
         if (this.x < 0) {
-            this.x = width;
-            this.prevX = width;
+            this.x = width - 0.5;
+            this.prevX = width - 0.5;
         }
         if (this.y > height) {
-            this.y = 0;
-            this.prevY = 0;
+            this.y = 0.5;
+            this.prevY = 0.5;
         }
         if (this.y < 0) {
-            this.y = height;
-            this.prevY = height;
+            this.y = height - 0.5;
+            this.prevY = height - 0.5;
         }
     };
     Particle.prototype.draw = function (state) {
@@ -64,13 +63,21 @@ var ParticleSystem = (function () {
                 break;
         }
     };
-    ParticleSystem.prototype.updatePositions = function () {
+    ParticleSystem.prototype.updatePositions = function (grid) {
         this.particles.forEach(function (p) {
             p.applySpeed();
+            p.accelerate(getNearestDirection(p.x, p.y, grid));
         });
     };
     return ParticleSystem;
 }());
+function getNearestDirection(x, y, grid) {
+    var cellWidth = width / settings.numHorizontalCells;
+    var cellHeight = height / settings.numVerticalCells;
+    var i = Math.floor(x / cellWidth);
+    var j = Math.floor(y / cellHeight);
+    return grid.getCellAt(i, j).dir;
+}
 function randX() {
     return random(width);
 }

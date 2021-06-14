@@ -9,7 +9,7 @@ function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);  // make canvas start in top-left corner
   canvas.style('z-index', '-1');  // set canvas as background
-  frameRate(60);  // target framerate
+  frameRate(5);  // target framerate
 
   // set background to black
   background(255);
@@ -29,7 +29,7 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-// single drawing iteration
+// single drawing/step iteration
 function draw() {
   const state = getCurrentState();
 
@@ -43,7 +43,7 @@ function draw() {
       break;
     case "particles":
       particleSystem.draw(state);
-      particleSystem.updatePositions();
+      particleSystem.updatePositions(grid);
       break;
   }
 

@@ -67,6 +67,9 @@ var Grid = (function () {
                 break;
         }
     };
+    Grid.prototype.getCellAt = function (i, j) {
+        return this.cells[i][j];
+    };
     return Grid;
 }());
 //# sourceMappingURL=TS/grid.js.map
