@@ -21,6 +21,22 @@ var Particle = (function () {
         this.prevY = this.y;
         this.x += this.dx;
         this.y += this.dy;
+        if (this.x > width) {
+            this.x = 0;
+            this.prevX = 0;
+        }
+        if (this.x < 0) {
+            this.x = width;
+            this.prevX = width;
+        }
+        if (this.y > height) {
+            this.y = 0;
+            this.prevY = 0;
+        }
+        if (this.y < 0) {
+            this.y = height;
+            this.prevY = height;
+        }
     };
     Particle.prototype.draw = function (state) {
         push();
@@ -56,9 +72,9 @@ var ParticleSystem = (function () {
     return ParticleSystem;
 }());
 function randX() {
-    return random(windowWidth);
+    return random(width);
 }
 function randY() {
-    return random(windowHeight);
+    return random(height);
 }
 //# sourceMappingURL=TS/particleSystem.js.map

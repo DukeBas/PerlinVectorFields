@@ -38,8 +38,8 @@ var Grid = (function () {
         return this.cells;
     };
     Grid.prototype.draw = function (state) {
-        var cellWidth = windowWidth / this.hor;
-        var cellHeight = windowHeight / this.vert;
+        var cellWidth = width / this.hor;
+        var cellHeight = height / this.vert;
         var cellMin = min(cellWidth, cellHeight);
         switch (state) {
             case "vector":

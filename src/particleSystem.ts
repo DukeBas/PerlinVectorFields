@@ -32,6 +32,24 @@ class Particle {
     this.prevY = this.y;
     this.x += this.dx;
     this.y += this.dy;
+
+    // out of screen detection / wrapping
+    if (this.x > width) {
+      this.x = 0;
+      this.prevX = 0;
+    }
+    if (this.x < 0) {
+      this.x = width;
+      this.prevX = width;
+    }
+    if (this. y > height){
+      this.y = 0;
+      this.prevY = 0;
+    }
+    if (this.y < 0){
+      this.y = height;
+      this.prevY = height;
+    }
   }
 
   // draws particle on screen
@@ -79,10 +97,10 @@ class ParticleSystem {
 
 // generates a random (x) value between 0 and the screen width (in pixels)
 function randX(): number {
-  return random(windowWidth);
+  return random(width);
 }
 
 // generates a random (y) value between 0 and the screen height (in pixels)
 function randY(): number {
-  return random(windowHeight);
+  return random(height);
 }

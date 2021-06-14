@@ -59,8 +59,8 @@ class Grid {
   // function to draw the cells
   draw(state: State): void {
     // get individual cell width and height
-    const cellWidth = windowWidth / this.hor;
-    const cellHeight = windowHeight / this.vert;
+    const cellWidth = width / this.hor;
+    const cellHeight = height / this.vert;
     const cellMin = min(cellWidth, cellHeight);
 
     // this.noiseStep();
