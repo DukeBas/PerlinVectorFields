@@ -21,7 +21,7 @@ var Grid = (function () {
         for (var i = 0; i < this.hor; i++) {
             this.cells[i] = [];
             for (var j = 0; j < this.vert; j++) {
-                var direction = noise(i / 25, j / 25) * 360;
+                var direction = settings.noiseDifference * noise(i / 25, j / 25) * 360;
                 this.cells[i][j] = { dir: direction };
             }
         }
@@ -29,7 +29,7 @@ var Grid = (function () {
     Grid.prototype.noiseStep = function () {
         for (var i = 0; i < this.hor; i++) {
             for (var j = 0; j < this.vert; j++) {
-                var direction = noise(i / 25, j / 25, frameCount / 50) * 360;
+                var direction = settings.noiseDifference * noise(i / 25, j / 25, frameCount / settings.noiseTimeResistance) * 360;
                 this.cells[i][j] = { dir: direction };
             }
         }

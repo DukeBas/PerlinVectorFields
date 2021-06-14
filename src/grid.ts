@@ -36,7 +36,7 @@ class Grid {
     for (let i = 0; i < this.hor; i++) {
       this.cells[i] = [];
       for (let j = 0; j < this.vert; j++) {
-        const direction = noise(i / 25, j / 25) * 360;
+        const direction = settings.noiseDifference * noise(i / 25, j / 25) * 360;
         this.cells[i][j] = { dir: direction };
       }
     }
@@ -46,7 +46,7 @@ class Grid {
   noiseStep() {
     for (let i = 0; i < this.hor; i++) {
       for (let j = 0; j < this.vert; j++) {
-        const direction = noise(i / 25, j / 25, frameCount / 50) * 360;
+        const direction = settings.noiseDifference * noise(i / 25, j / 25, frameCount / settings.noiseTimeResistance) * 360;
         this.cells[i][j] = { dir: direction };
       }
     }
