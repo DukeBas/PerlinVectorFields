@@ -3,12 +3,17 @@ class Particle {
   y: number;  // y part of location coordinate
   dx: number; // x component of speed
   dy: number; // y component of speed
+  prevX: number;  // last x location
+  prevY: number;  // last y location
 
   constructor(x: number, y: number) {
+    this
     this.x = x;
     this.y = y;
-    this.dx = 0;
-    this.dy = 0;
+    this.dx = random(-10, 10);
+    this.dy = random(-10, 10);
+    this.prevX = x;
+    this.prevY = y;
   }
 
   setSpeed(dx: number, dy: number): void {
@@ -23,6 +28,8 @@ class Particle {
 
   // adds x and y speed values to x and y location values
   applySpeed(): void {
+    this.prevX = this.x;
+    this.prevY = this.y;
     this.x += this.dx;
     this.y += this.dy;
   }
@@ -30,9 +37,9 @@ class Particle {
   // draws particle on screen
   draw(state: State): void {
     push();
-    stroke(255)
+    stroke(255, 100)
     strokeWeight(5);
-    point(this.x, this.y);
+    line(this.prevX, this.prevY, this.x, this.y);
     pop();
   }
 }

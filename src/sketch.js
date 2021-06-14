@@ -4,7 +4,7 @@ function setup() {
     var canvas = createCanvas(windowWidth, windowHeight);
     canvas.position(0, 0);
     canvas.style('z-index', '-1');
-    frameRate(6);
+    frameRate(60);
     background(255);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);

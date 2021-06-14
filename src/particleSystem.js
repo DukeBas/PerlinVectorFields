@@ -1,9 +1,12 @@
 var Particle = (function () {
     function Particle(x, y) {
+        this;
         this.x = x;
         this.y = y;
-        this.dx = 0;
-        this.dy = 0;
+        this.dx = random(-10, 10);
+        this.dy = random(-10, 10);
+        this.prevX = x;
+        this.prevY = y;
     }
     Particle.prototype.setSpeed = function (dx, dy) {
         this.dx = dx;
@@ -14,14 +17,16 @@ var Particle = (function () {
         this.dy += ddy;
     };
     Particle.prototype.applySpeed = function () {
+        this.prevX = this.x;
+        this.prevY = this.y;
         this.x += this.dx;
         this.y += this.dy;
     };
     Particle.prototype.draw = function (state) {
         push();
-        stroke(255);
+        stroke(255, 100);
         strokeWeight(5);
-        point(this.x, this.y);
+        line(this.prevX, this.prevY, this.x, this.y);
         pop();
     };
     return Particle;
