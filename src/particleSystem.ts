@@ -29,7 +29,11 @@ class Particle {
 
   // draws particle on screen
   draw(state: State): void {
-    circle(this.x, this.y, 100);
+    push();
+    stroke(255)
+    strokeWeight(5);
+    point(this.x, this.y);
+    pop();
   }
 }
 
@@ -46,8 +50,22 @@ class ParticleSystem {
 
   // draw all the particles
   draw(state: State): void {
+    switch (state){
+      case "particles":
+        this.particles.forEach((p) => {
+          p.draw(state);
+        });
+        break
+    }    
+  }
+
+  // updates the particles positions according to their speed, and updates their speed according to their location
+  updatePositions() {
     this.particles.forEach((p) => {
-      p.draw(state);
+      // change location, apply speed
+      p.applySpeed();
+      // change speed, apply acceleration based on location (direction of closest vector)
+      // TODO
     });
   }
 }

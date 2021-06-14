@@ -8,16 +8,35 @@ function setup() {
     background(255);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
+    changedState();
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 function draw() {
-    background(255);
     var state = getCurrentState();
-    grid.draw(state);
-    particleSystem.draw(state);
+    switch (state) {
+        case "vector":
+        case "heatmap":
+            background(255);
+            grid.draw(state);
+            break;
+        case "particles":
+            particleSystem.draw(state);
+            particleSystem.updatePositions();
+            break;
+    }
     updateFps();
+}
+function changedState() {
+    var state = getCurrentState();
+    switch (state) {
+        case "vector":
+        case "heatmap":
+            break;
+        case "particles":
+            background(0);
+    }
 }
 function getCurrentState() {
     var selector = document.getElementById('state-selector');

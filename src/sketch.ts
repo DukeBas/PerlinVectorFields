@@ -1,7 +1,7 @@
 let grid: Grid;
 let particleSystem: ParticleSystem;
 
-// Possible states, gotten 
+// Possible states, gotten from selector
 type State = "vector" | "heatmap" | "particles";
 
 // run before first drawn frame
@@ -19,6 +19,9 @@ function setup() {
 
   // create particle system
   particleSystem = new ParticleSystem(settings.numParticles);
+
+  // set everything up based on inital state
+  changedState();
 }
 
 // automatically called function to make canvas resize with window
@@ -28,15 +31,39 @@ function windowResized() {
 
 // single drawing iteration
 function draw() {
-  // draw background
-  background(255);
-
   const state = getCurrentState();
-  grid.draw(state);
-  particleSystem.draw(state);
+
+  switch (state) {
+    case "vector":
+    case "heatmap":
+      // draw background
+      background(255);
+
+      grid.draw(state);
+      break;
+    case "particles":
+      particleSystem.draw(state);
+      particleSystem.updatePositions();
+      break;
+  }
 
   updateFps();
 }
+
+// called when state gets changed
+function changedState() {
+  const state = getCurrentState();
+
+  // change things based on the new state
+  switch (state) {
+    case "vector":
+    case "heatmap":
+      break;
+    case "particles":
+      background(0);
+  }
+}
+
 
 // function to get the current state from selector
 function getCurrentState(): State {

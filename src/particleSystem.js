@@ -18,7 +18,11 @@ var Particle = (function () {
         this.y += this.dy;
     };
     Particle.prototype.draw = function (state) {
-        circle(this.x, this.y, 100);
+        push();
+        stroke(255);
+        strokeWeight(5);
+        point(this.x, this.y);
+        pop();
     };
     return Particle;
 }());
@@ -31,8 +35,17 @@ var ParticleSystem = (function () {
         }
     }
     ParticleSystem.prototype.draw = function (state) {
+        switch (state) {
+            case "particles":
+                this.particles.forEach(function (p) {
+                    p.draw(state);
+                });
+                break;
+        }
+    };
+    ParticleSystem.prototype.updatePositions = function () {
         this.particles.forEach(function (p) {
-            p.draw(state);
+            p.applySpeed();
         });
     };
     return ParticleSystem;

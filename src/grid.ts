@@ -46,7 +46,7 @@ class Grid {
   noiseStep() {
     for (let i = 0; i < this.hor; i++) {
       for (let j = 0; j < this.vert; j++) {
-        const direction = noise(i / 25, j / 25, frameCount/50) * 360;
+        const direction = noise(i / 25, j / 25, frameCount / 50) * 360;
         this.cells[i][j] = { dir: direction };
       }
     }
@@ -77,7 +77,7 @@ class Grid {
               locY + cellHeight / 2,
               locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))),
               locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180)))
-            )
+            );
           }
         }
         break;
