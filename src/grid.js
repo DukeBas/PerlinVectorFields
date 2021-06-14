@@ -26,6 +26,14 @@ var Grid = (function () {
             }
         }
     };
+    Grid.prototype.noiseStep = function () {
+        for (var i = 0; i < numHorizontalCells; i++) {
+            for (var j = 0; j < numHorizontalCells; j++) {
+                var direction = noise(i / 25, j / 25, frameCount / 50) * 360;
+                this.cells[i][j] = { dir: direction };
+            }
+        }
+    };
     Grid.prototype.getGrid = function () {
         return this.cells;
     };
@@ -33,6 +41,7 @@ var Grid = (function () {
         var cellWidth = windowWidth / this.hor;
         var cellHeight = windowHeight / this.vert;
         var cellMin = min(cellWidth, cellHeight);
+        this.noiseStep();
         switch (state) {
             case "vector":
                 for (var i = 0; i < this.hor; i++) {

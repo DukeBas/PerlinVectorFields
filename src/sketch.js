@@ -5,7 +5,7 @@ function setup() {
     var canvas = createCanvas(windowWidth, windowHeight);
     canvas.position(0, 0);
     canvas.style('z-index', '-1');
-    frameRate(5);
+    frameRate(60);
     background(255);
     grid = new Grid(numHorizontalCells, numVerticalCells);
 }

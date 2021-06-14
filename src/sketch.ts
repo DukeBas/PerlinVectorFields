@@ -11,7 +11,7 @@ function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);  // make canvas start in top-left corner
   canvas.style('z-index', '-1');  // set canvas as background
-  frameRate(5);  // target framerate
+  frameRate(60);  // target framerate
 
   // set background to black
   background(255);
@@ -29,7 +29,7 @@ function windowResized() {
 function draw() {
   // draw background
   background(255);
-
+  
   const state = getCurrentState();
   grid.draw(state);
 
