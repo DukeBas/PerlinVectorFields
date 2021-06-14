@@ -63,7 +63,7 @@ class Grid {
     const cellHeight = windowHeight / this.vert;
     const cellMin = min(cellWidth, cellHeight);
 
-    this.noiseStep();
+    // this.noiseStep();
 
     switch (state) {
       case "vector":
@@ -75,8 +75,8 @@ class Grid {
 
             line(locX + cellWidth / 2,
               locY + cellHeight / 2,
-              locX + cellWidth / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))),
-              locY + cellHeight / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180)))
+              locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))),
+              locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180)))
             )
           }
         }

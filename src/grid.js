@@ -41,7 +41,6 @@ var Grid = (function () {
         var cellWidth = windowWidth / this.hor;
         var cellHeight = windowHeight / this.vert;
         var cellMin = min(cellWidth, cellHeight);
-        this.noiseStep();
         switch (state) {
             case "vector":
                 for (var i = 0; i < this.hor; i++) {
@@ -49,7 +48,7 @@ var Grid = (function () {
                         var cell = this.cells[i][j];
                         var locX = i * cellWidth;
                         var locY = j * cellHeight;
-                        line(locX + cellWidth / 2, locY + cellHeight / 2, locX + cellWidth / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))), locY + cellHeight / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180))));
+                        line(locX + cellWidth / 2, locY + cellHeight / 2, locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))), locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180))));
                     }
                 }
                 break;
