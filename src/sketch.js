@@ -4,7 +4,7 @@ function setup() {
     var canvas = createCanvas(windowWidth, windowHeight);
     canvas.position(0, 0);
     canvas.style('z-index', '-1');
-    frameRate(5);
+    frameRate(60);
     background(255);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
@@ -22,6 +22,8 @@ function draw() {
             grid.draw(state);
             break;
         case "particles":
+            background(0);
+            grid.draw(state);
             particleSystem.draw(state);
             particleSystem.updatePositions(grid);
             break;
@@ -33,8 +35,10 @@ function changedState() {
     switch (state) {
         case "vector":
         case "heatmap":
+            frameRate(5);
             break;
         case "particles":
+            frameRate(144);
             background(0);
     }
 }

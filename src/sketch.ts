@@ -9,7 +9,7 @@ function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);  // make canvas start in top-left corner
   canvas.style('z-index', '-1');  // set canvas as background
-  frameRate(5);  // target framerate
+  frameRate(60);  // target framerate
 
   // set background to black
   background(255);
@@ -38,10 +38,11 @@ function draw() {
     case "heatmap":
       // draw background
       background(255);
-
       grid.draw(state);
       break;
     case "particles":
+      background(0);
+      grid.draw(state);
       particleSystem.draw(state);
       particleSystem.updatePositions(grid);
       break;
@@ -56,10 +57,12 @@ function changedState() {
 
   // change things based on the new state
   switch (state) {
-    case "vector":
+    case "vector":      
     case "heatmap":
+      frameRate(5);
       break;
     case "particles":
+      frameRate(144);
       background(0);
   }
 }

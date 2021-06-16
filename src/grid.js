@@ -65,6 +65,20 @@ var Grid = (function () {
                     }
                 }
                 break;
+            case "particles":
+                push();
+                stroke(255);
+                strokeWeight(0.5);
+                for (var i = 0; i < this.hor; i++) {
+                    for (var j = 0; j < this.vert; j++) {
+                        var cell = this.cells[i][j];
+                        var locX = i * cellWidth;
+                        var locY = j * cellHeight;
+                        line(locX + cellWidth / 2, locY + cellHeight / 2, locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))), locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180))));
+                    }
+                }
+                pop();
+                break;
         }
     };
     Grid.prototype.getCellAt = function (i, j) {

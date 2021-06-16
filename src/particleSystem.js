@@ -1,48 +1,47 @@
 var Particle = (function () {
     function Particle(x, y) {
-        this.x = x;
-        this.y = y;
-        this.dx = 0;
-        this.dy = 0;
-        this.prevX = x;
-        this.prevY = y;
+        this.pos = createVector(x, y);
+        this.prev = createVector(x, y);
+        this.vel = createVector(0, 0);
     }
-    Particle.prototype.setSpeed = function (dx, dy) {
-        this.dx = dx;
-        this.dy = dy;
-    };
-    Particle.prototype.accelerate = function (dir) {
-        this.dx += Math.cos(dir * (Math.PI / 180)) * settings.fieldStrength;
-        this.dy += Math.sin(dir * (Math.PI / 180)) * settings.fieldStrength;
+    Particle.prototype.accelerate = function (dir, strength) {
+        var acc = p5.Vector.fromAngle(dir * Math.PI / 180);
+        acc.setMag(strength);
+        this.vel.add(acc);
+        this.vel.limit(5);
     };
     Particle.prototype.applySpeed = function () {
-        this.prevX = this.x;
-        this.prevY = this.y;
-        this.x += this.dx;
-        this.y += this.dy;
-        if (this.x > width) {
-            this.x = 0.5;
-            this.prevX = 0.5;
+        this.prev = this.pos.copy();
+        this.pos.add(this.vel);
+        if (this.pos.x > width) {
+            this.pos.x = 0.5;
+            this.prev.x = 0.5;
         }
-        if (this.x < 0) {
-            this.x = width - 0.5;
-            this.prevX = width - 0.5;
+        if (this.pos.x < 0) {
+            this.pos.x = width - 0.5;
+            this.prev.x = width - 0.5;
         }
-        if (this.y > height) {
-            this.y = 0.5;
-            this.prevY = 0.5;
+        if (this.pos.y > height) {
+            this.pos.y = 0.5;
+            this.prev.y = 0.5;
         }
-        if (this.y < 0) {
-            this.y = height - 0.5;
-            this.prevY = height - 0.5;
+        if (this.pos.y < 0) {
+            this.pos.y = height - 0.5;
+            this.prev.y = height - 0.5;
         }
     };
     Particle.prototype.draw = function (state) {
         push();
         stroke(255, 100);
         strokeWeight(5);
-        line(this.prevX, this.prevY, this.x, this.y);
+        line(this.prev.x, this.prev.y, this.pos.x, this.pos.y);
         pop();
+    };
+    Particle.prototype.getX = function () {
+        return this.pos.x;
+    };
+    Particle.prototype.getY = function () {
+        return this.pos.y;
     };
     return Particle;
 }());
@@ -66,7 +65,7 @@ var ParticleSystem = (function () {
     ParticleSystem.prototype.updatePositions = function (grid) {
         this.particles.forEach(function (p) {
             p.applySpeed();
-            p.accelerate(getNearestDirection(p.x, p.y, grid));
+            p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength);
         });
     };
     return ParticleSystem;

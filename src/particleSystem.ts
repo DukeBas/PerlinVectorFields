@@ -1,58 +1,45 @@
-// TODO:
-// Switch everything to p5 vectors
-// implement either a friction system or a simple max speed (scale to length x) 
-
 class Particle {
-  x: number;  // x part of location coordinate
-  y: number;  // y part of location coordinate
-  dx: number; // x component of speed
-  dy: number; // y component of speed
-  prevX: number;  // last x location
-  prevY: number;  // last y location
+  pos: p5.Vector;   // position vector
+  prev: p5.Vector;  // vector of previous position 
+  vel: p5.Vector;   // velocity vector
+
 
   constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-    this.dx = 0;
-    this.dy = 0;
-    this.prevX = x;
-    this.prevY = y;
+    this.pos = createVector(x, y);
+    this.prev = createVector(x, y);
+    this.vel = createVector(0, 0);
   }
 
-  setSpeed(dx: number, dy: number): void {
-    this.dx = dx;
-    this.dy = dy;
-  }
-
-  // takes a direction and adds speed to this particle in that direction
-  accelerate(dir: number): void {
-    this.dx += Math.cos(dir * (Math.PI / 180)) * settings.fieldStrength;
-    this.dy += Math.sin(dir * (Math.PI / 180)) * settings.fieldStrength;
+  // takes a direction (in degrees) and adds speed to this particle in that direction
+  accelerate(dir: number, strength: number): void {
+    const acc = p5.Vector.fromAngle(dir * Math.PI / 180);
+    acc.setMag(strength);
+    this.vel.add(acc);
+    this.vel.limit(5);
   }
 
   // adds x and y speed values to x and y location values
   applySpeed(): void {
-    this.prevX = this.x;
-    this.prevY = this.y;
-    this.x += this.dx;
-    this.y += this.dy;
+    this.prev = this.pos.copy();
+    this.pos.add(this.vel);
+    
 
     // out of screen detection / wrapping
-    if (this.x > width) {
-      this.x = 0.5;
-      this.prevX = 0.5;
+    if (this.pos.x > width) {
+      this.pos.x = 0.5;
+      this.prev.x = 0.5;
     }
-    if (this.x < 0) {
-      this.x = width - 0.5;
-      this.prevX = width - 0.5;
+    if (this.pos.x < 0) {
+      this.pos.x = width - 0.5;
+      this.prev.x = width - 0.5;
     }
-    if (this. y > height){
-      this.y = 0.5;
-      this.prevY = 0.5;
+    if (this.pos.y > height){
+      this.pos.y = 0.5;
+      this.prev.y = 0.5;
     }
-    if (this.y < 0){
-      this.y = height -0.5;
-      this.prevY = height -0.5;
+    if (this.pos.y < 0){
+      this.pos.y = height -0.5;
+      this.prev.y = height -0.5;
     }
   }
 
@@ -61,8 +48,16 @@ class Particle {
     push();
     stroke(255, 100)
     strokeWeight(5);
-    line(this.prevX, this.prevY, this.x, this.y);
+    line(this.prev.x, this.prev.y, this.pos.x, this.pos.y);
     pop();
+  }
+
+  getX(): number {
+    return this.pos.x;
+  }
+
+  getY(): number {
+    return this.pos.y;
   }
 }
 
@@ -94,12 +89,12 @@ class ParticleSystem {
       // change location, apply speed
       p.applySpeed();
       // change speed, apply acceleration based on location (direction of closest vector)
-      p.accelerate(getNearestDirection(p.x, p.y, grid))
+      p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength)
     });
   }
 }
 
-// takes x and y and returns the direction of the nearest vector
+// takes x and y and returns the direction (in degrees) of the nearest vector
 function getNearestDirection(x: number, y: number, grid: Grid): number {
   let cellWidth = width / settings.numHorizontalCells;
   let cellHeight = height / settings.numVerticalCells;
