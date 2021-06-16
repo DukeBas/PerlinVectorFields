@@ -9,19 +9,27 @@ var Grid = (function () {
         this.generateNoisedCells();
     }
     Grid.prototype.generateRandomCells = function () {
-        for (var i = 0; i < numHorizontalCells; i++) {
+        for (var i = 0; i < this.hor; i++) {
             this.cells[i] = [];
-            for (var j = 0; j < numHorizontalCells; j++) {
+            for (var j = 0; j < this.vert; j++) {
                 var direction = random(0, 360);
                 this.cells[i][j] = { dir: direction };
             }
         }
     };
     Grid.prototype.generateNoisedCells = function () {
-        for (var i = 0; i < numHorizontalCells; i++) {
+        for (var i = 0; i < this.hor; i++) {
             this.cells[i] = [];
-            for (var j = 0; j < numHorizontalCells; j++) {
-                var direction = noise(i / 25, j / 25) * 360;
+            for (var j = 0; j < this.vert; j++) {
+                var direction = settings.noiseDifference * noise(i / 25, j / 25) * 360;
+                this.cells[i][j] = { dir: direction };
+            }
+        }
+    };
+    Grid.prototype.noiseStep = function () {
+        for (var i = 0; i < this.hor; i++) {
+            for (var j = 0; j < this.vert; j++) {
+                var direction = settings.noiseDifference * noise(i / 25, j / 25, frameCount / settings.noiseTimeResistance) * 360;
                 this.cells[i][j] = { dir: direction };
             }
         }
@@ -30,8 +38,8 @@ var Grid = (function () {
         return this.cells;
     };
     Grid.prototype.draw = function (state) {
-        var cellWidth = windowWidth / this.hor;
-        var cellHeight = windowHeight / this.vert;
+        var cellWidth = width / this.hor;
+        var cellHeight = height / this.vert;
         var cellMin = min(cellWidth, cellHeight);
         switch (state) {
             case "vector":
@@ -40,7 +48,7 @@ var Grid = (function () {
                         var cell = this.cells[i][j];
                         var locX = i * cellWidth;
                         var locY = j * cellHeight;
-                        line(locX + cellWidth / 2, locY + cellHeight / 2, locX + cellWidth / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))), locY + cellHeight / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180))));
+                        line(locX + cellWidth / 2, locY + cellHeight / 2, locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))), locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180))));
                     }
                 }
                 break;
@@ -57,7 +65,24 @@ var Grid = (function () {
                     }
                 }
                 break;
+            case "particles":
+                push();
+                stroke(255);
+                strokeWeight(0.5);
+                for (var i = 0; i < this.hor; i++) {
+                    for (var j = 0; j < this.vert; j++) {
+                        var cell = this.cells[i][j];
+                        var locX = i * cellWidth;
+                        var locY = j * cellHeight;
+                        line(locX + cellWidth / 2, locY + cellHeight / 2, locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))), locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180))));
+                    }
+                }
+                pop();
+                break;
         }
+    };
+    Grid.prototype.getCellAt = function (i, j) {
+        return this.cells[i][j];
     };
     return Grid;
 }());

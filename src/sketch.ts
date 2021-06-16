@@ -1,45 +1,68 @@
-// Variables for total cells, each cell holding a direction
-let numHorizontalCells = 50;
-let numVerticalCells = 40;
 let grid: Grid;
+let particleSystem: ParticleSystem;
+let fpsBuffer: number[];  // used to smooth out fps counter
 
-// Possible states, gotten 
-type State = "vector" | "heatmap";
+// Possible states, gotten from selector
+type State = "vector" | "heatmap" | "particles" | "trails";
 
 // run before first drawn frame
 function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);  // make canvas start in top-left corner
   canvas.style('z-index', '-1');  // set canvas as background
-  frameRate(5);  // target framerate
+  frameRate(settings.maxFrameRate);  // target framerate
 
   // set background to black
   background(255);
 
   // create a grid
-  grid = new Grid(numHorizontalCells, numVerticalCells);
+  grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
+
+  // create particle system
+  particleSystem = new ParticleSystem(settings.numParticles);
+
+  // set up fps buffer
+  fpsBuffer = [];
+  for (let i = 0; i < settings.fpsBufferSize; i++) {
+    fpsBuffer.push(settings.maxFrameRate);
+  }
+
+  // set everything up based on inital state
+  changedState();
 }
 
 // automatically called function to make canvas resize with window
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  changedState();
 }
 
-// single drawing iteration
+// single drawing/step iteration
 function draw() {
-  // draw background
-  background(255);
-
   const state = getCurrentState();
-  grid.draw(state);
 
-  // const randX = random(0, windowWidth);
-  // const randY = random(0, windowHeight);
-  // rect(randX, randY, 10, 10)
+  switch (state) {
+    case "vector":
+    case "heatmap":
+      // draw background
+      background(255);
+      grid.draw(state);
+      break;
+    case "particles":
+      background(0);
+      grid.draw(state);
+      particleSystem.draw(state);
+      particleSystem.updatePositions(grid);
+      break;
+    case "trails":
+      particleSystem.draw(state);
+      particleSystem.updatePositions(grid);
+      break;
+  }
+
+  updateFps();
 }
 
-// function to get the current state from selector
-function getCurrentState(): State {
-  const selector: any = document.getElementById('state-selector');
-  return selector.value;
-}
+
+
+

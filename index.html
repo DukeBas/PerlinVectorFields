@@ -6,7 +6,9 @@
 
   <link rel="stylesheet" href="style.css">
 
-  <script src="src/sidebar.js"></script>
+  <script src="src/settings.js"></script>
+  <script src="src/interaction.js"></script>
+  <script src="src/particleSystem.js"></script>
   <script src="src/grid.js"></script>
   <script src="src/sketch.js"></script>
 
@@ -14,19 +16,24 @@
   <!-- <link rel="icon" href="" /> -->
 </head>
 
-<!-- <body onload="openSidebar()"> -->
-<body>
+<body onload="openSidebar()">
+<!-- <body> -->
   <div id="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
     I am a sidebar! <br>
-    <button onclick="alert('Click!')"> Button </button> <br>
-    <select id="state-selector" name="selector">
+    <!-- <button onclick="alert('Click!')"> Button </button> <br> -->
+    <select id="state-selector" name="selector" onchange="changedState()">
       <option value="vector">Vector field</option>
       <option value="heatmap">Heatmap</option>
+      <option value="particles">Particles</option>
+      <option value="trails">Trails</option>
     </select>
     <a href="https://github.com/DukeBas/PerlinVectorFields">
       <img src="GitHub-light.png" alt="Github link" id="GitHub">
     </a>
+    <div id="fps-container"></div>
+    <span id="fps">0</span>
+    <span> fps</span>
   </div>
 </body>
 
