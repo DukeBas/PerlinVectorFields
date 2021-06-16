@@ -34,6 +34,7 @@ function setup() {
 // automatically called function to make canvas resize with window
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  changedState();
 }
 
 // single drawing/step iteration

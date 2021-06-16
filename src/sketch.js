@@ -17,6 +17,7 @@ function setup() {
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    changedState();
 }
 function draw() {
     var state = getCurrentState();
