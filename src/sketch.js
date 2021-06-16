@@ -39,34 +39,4 @@ function draw() {
     }
     updateFps();
 }
-function changedState() {
-    var state = getCurrentState();
-    switch (state) {
-        case "vector":
-        case "heatmap":
-            frameRate(settings.slowFrameRate);
-            break;
-        case "particles":
-            frameRate(settings.maxFrameRate);
-            background(0);
-            break;
-        case "trails":
-            frameRate(settings.maxFrameRate);
-            background(0);
-            break;
-    }
-}
-function getCurrentState() {
-    var selector = document.getElementById('state-selector');
-    return selector.value;
-}
-function updateFps() {
-    fpsBuffer.shift();
-    fpsBuffer.push(frameRate());
-    var sum = fpsBuffer.reduce(function (a, b) { return a + b; });
-    var avg = sum / fpsBuffer.length;
-    if (eval(document.getElementById('sidebar').style.width.charAt(0))) {
-        document.getElementById('fps').innerHTML = avg.toFixed(0).toString();
-    }
-}
 //# sourceMappingURL=TS/sketch.js.map
