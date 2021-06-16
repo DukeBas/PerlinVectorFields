@@ -3,7 +3,7 @@ let particleSystem: ParticleSystem;
 let fpsBuffer: number[];  // used to smooth out fps counter
 
 // Possible states, gotten from selector
-type State = "vector" | "heatmap" | "particles";
+type State = "vector" | "heatmap" | "particles" | "trails";
 
 // run before first drawn frame
 function setup() {
@@ -23,7 +23,7 @@ function setup() {
 
   // set up fps buffer
   fpsBuffer = [];
-  for (let i = 0; i < settings.fpsBufferSize; i++){
+  for (let i = 0; i < settings.fpsBufferSize; i++) {
     fpsBuffer.push(settings.maxFrameRate);
   }
 
@@ -53,6 +53,10 @@ function draw() {
       particleSystem.draw(state);
       particleSystem.updatePositions(grid);
       break;
+    case "trails":
+      particleSystem.draw(state);
+      particleSystem.updatePositions(grid);
+      break;
   }
 
   updateFps();
@@ -64,13 +68,18 @@ function changedState() {
 
   // change things based on the new state
   switch (state) {
-    case "vector":      
+    case "vector":
     case "heatmap":
       frameRate(settings.slowFrameRate);
       break;
     case "particles":
       frameRate(settings.maxFrameRate);
       background(0);
+      break;
+    case "trails":
+      frameRate(settings.maxFrameRate);
+      background(0);
+      break;
   }
 }
 
@@ -87,7 +96,7 @@ function updateFps(): void {
   fpsBuffer.shift(); // remove first entry
   fpsBuffer.push(frameRate()); // add latest framerate
 
-  const sum = fpsBuffer.reduce((a,b) => a + b);
+  const sum = fpsBuffer.reduce((a, b) => a + b);
   const avg = sum / fpsBuffer.length;
 
   // only update it when sidebar is shown

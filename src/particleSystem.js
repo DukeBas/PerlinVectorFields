@@ -31,11 +31,7 @@ var Particle = (function () {
         }
     };
     Particle.prototype.draw = function (state) {
-        push();
-        stroke(255, 100);
-        strokeWeight(5);
         line(this.prev.x, this.prev.y, this.pos.x, this.pos.y);
-        pop();
     };
     Particle.prototype.getX = function () {
         return this.pos.x;
@@ -56,9 +52,22 @@ var ParticleSystem = (function () {
     ParticleSystem.prototype.draw = function (state) {
         switch (state) {
             case "particles":
+                push();
+                stroke(255, 100);
+                strokeWeight(5);
                 this.particles.forEach(function (p) {
                     p.draw(state);
                 });
+                pop();
+                break;
+            case "trails":
+                push();
+                stroke(255, 5);
+                strokeWeight(2);
+                this.particles.forEach(function (p) {
+                    p.draw(state);
+                });
+                pop();
                 break;
         }
     };

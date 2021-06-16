@@ -32,6 +32,10 @@ function draw() {
             particleSystem.draw(state);
             particleSystem.updatePositions(grid);
             break;
+        case "trails":
+            particleSystem.draw(state);
+            particleSystem.updatePositions(grid);
+            break;
     }
     updateFps();
 }
@@ -45,6 +49,11 @@ function changedState() {
         case "particles":
             frameRate(settings.maxFrameRate);
             background(0);
+            break;
+        case "trails":
+            frameRate(settings.maxFrameRate);
+            background(0);
+            break;
     }
 }
 function getCurrentState() {

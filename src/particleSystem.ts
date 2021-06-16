@@ -22,7 +22,7 @@ class Particle {
   applySpeed(): void {
     this.prev = this.pos.copy();
     this.pos.add(this.vel);
-    
+
 
     // out of screen detection / wrapping
     if (this.pos.x > width) {
@@ -33,23 +33,19 @@ class Particle {
       this.pos.x = width - 0.5;
       this.prev.x = width - 0.5;
     }
-    if (this.pos.y > height){
+    if (this.pos.y > height) {
       this.pos.y = 0.5;
       this.prev.y = 0.5;
     }
-    if (this.pos.y < 0){
-      this.pos.y = height -0.5;
-      this.prev.y = height -0.5;
+    if (this.pos.y < 0) {
+      this.pos.y = height - 0.5;
+      this.prev.y = height - 0.5;
     }
   }
 
   // draws particle on screen
   draw(state: State): void {
-    push();
-    stroke(255, 100)
-    strokeWeight(5);
     line(this.prev.x, this.prev.y, this.pos.x, this.pos.y);
-    pop();
   }
 
   getX(): number {
@@ -74,13 +70,26 @@ class ParticleSystem {
 
   // draw all the particles
   draw(state: State): void {
-    switch (state){
+    switch (state) {
       case "particles":
+        push();
+        stroke(255, 100)
+        strokeWeight(5);
         this.particles.forEach((p) => {
           p.draw(state);
         });
-        break
-    }    
+        pop();
+        break;
+      case "trails":
+        push();
+        stroke(255, 5)
+        strokeWeight(2);
+        this.particles.forEach((p) => {
+          p.draw(state);
+        });
+        pop();
+        break;
+    }
   }
 
   // updates the particles positions according to their speed, and updates their speed according to their location
@@ -98,8 +107,8 @@ class ParticleSystem {
 function getNearestDirection(x: number, y: number, grid: Grid): number {
   let cellWidth = width / settings.numHorizontalCells;
   let cellHeight = height / settings.numVerticalCells;
-  const i = Math.floor(x/cellWidth);
-  const j = Math.floor(y/cellHeight);
+  const i = Math.floor(x / cellWidth);
+  const j = Math.floor(y / cellHeight);
   return grid.getCellAt(i, j).dir;
 }
 
