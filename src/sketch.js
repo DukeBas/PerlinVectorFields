@@ -1,13 +1,18 @@
 var grid;
 var particleSystem;
+var fpsBuffer;
 function setup() {
     var canvas = createCanvas(windowWidth, windowHeight);
     canvas.position(0, 0);
     canvas.style('z-index', '-1');
-    frameRate(60);
+    frameRate(settings.maxFrameRate);
     background(255);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
+    fpsBuffer = [];
+    for (var i = 0; i < settings.fpsBufferSize; i++) {
+        fpsBuffer.push(settings.maxFrameRate);
+    }
     changedState();
 }
 function windowResized() {
@@ -35,10 +40,10 @@ function changedState() {
     switch (state) {
         case "vector":
         case "heatmap":
-            frameRate(5);
+            frameRate(settings.slowFrameRate);
             break;
         case "particles":
-            frameRate(144);
+            frameRate(settings.maxFrameRate);
             background(0);
     }
 }
@@ -47,8 +52,12 @@ function getCurrentState() {
     return selector.value;
 }
 function updateFps() {
+    fpsBuffer.shift();
+    fpsBuffer.push(frameRate());
+    var sum = fpsBuffer.reduce(function (a, b) { return a + b; });
+    var avg = sum / fpsBuffer.length;
     if (eval(document.getElementById('sidebar').style.width.charAt(0))) {
-        document.getElementById('fps').innerHTML = frameRate().toFixed(0).toString();
+        document.getElementById('fps').innerHTML = avg.toFixed(0).toString();
     }
 }
 //# sourceMappingURL=TS/sketch.js.map

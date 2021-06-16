@@ -1,5 +1,6 @@
 let grid: Grid;
 let particleSystem: ParticleSystem;
+let fpsBuffer: number[];  // used to smooth out fps counter
 
 // Possible states, gotten from selector
 type State = "vector" | "heatmap" | "particles";
@@ -9,7 +10,7 @@ function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.position(0, 0);  // make canvas start in top-left corner
   canvas.style('z-index', '-1');  // set canvas as background
-  frameRate(60);  // target framerate
+  frameRate(settings.maxFrameRate);  // target framerate
 
   // set background to black
   background(255);
@@ -19,6 +20,12 @@ function setup() {
 
   // create particle system
   particleSystem = new ParticleSystem(settings.numParticles);
+
+  // set up fps buffer
+  fpsBuffer = [];
+  for (let i = 0; i < settings.fpsBufferSize; i++){
+    fpsBuffer.push(settings.maxFrameRate);
+  }
 
   // set everything up based on inital state
   changedState();
@@ -59,10 +66,10 @@ function changedState() {
   switch (state) {
     case "vector":      
     case "heatmap":
-      frameRate(5);
+      frameRate(settings.slowFrameRate);
       break;
     case "particles":
-      frameRate(144);
+      frameRate(settings.maxFrameRate);
       background(0);
   }
 }
@@ -76,9 +83,16 @@ function getCurrentState(): State {
 
 // update the fps counter in the sidebar
 function updateFps(): void {
+  // smooth out fps
+  fpsBuffer.shift(); // remove first entry
+  fpsBuffer.push(frameRate()); // add latest framerate
+
+  const sum = fpsBuffer.reduce((a,b) => a + b);
+  const avg = sum / fpsBuffer.length;
+
   // only update it when sidebar is shown
   if (eval(document.getElementById('sidebar').style.width.charAt(0))) {
-    document.getElementById('fps').innerHTML = frameRate().toFixed(0).toString();
+    document.getElementById('fps').innerHTML = avg.toFixed(0).toString();
   }
 
 }

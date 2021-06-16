@@ -6,5 +6,8 @@ var settings = {
     fieldStrength: 0.5,
     noiseDifference: 2,
     noiseTimeResistance: 50,
+    slowFrameRate: 5,
+    maxFrameRate: 60,
+    fpsBufferSize: 4,
 };
 //# sourceMappingURL=TS/settings.js.map
