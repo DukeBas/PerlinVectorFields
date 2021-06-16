@@ -41,6 +41,11 @@ function windowResized() {
 function draw() {
   const state = getCurrentState();
 
+  // update vector field if required
+  if (settings.timeShift) {
+    grid.noiseStep();
+  }
+
   switch (state) {
     case "vector":
     case "heatmap":

@@ -21,6 +21,9 @@ function windowResized() {
 }
 function draw() {
     var state = getCurrentState();
+    if (settings.timeShift) {
+        grid.noiseStep();
+    }
     switch (state) {
         case "vector":
         case "heatmap":
