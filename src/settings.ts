@@ -19,3 +19,6 @@ const settings = {
 // noise seed (+ show / alter in sidebar)
 // noise detail (perlin noise octaves)
 // noise time resistance slider
+// fix timeshift
+// reset particles
+// reseed particles button
