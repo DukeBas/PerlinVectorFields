@@ -30,5 +30,5 @@ function generateSeed(): number {
 // noise detail (perlin noise octaves)
 // noise time resistance slider
 // reset particles + button
-// state specific settings
+// state specific settings (sliders)
 // second canvas overtop the first for non-trailing things
