@@ -16,12 +16,13 @@
   <!-- <link rel="icon" href="" /> -->
 </head>
 
-<body onload="openSidebar()">
+<body onload="openSidebar(); setButtonStates();">
 <!-- <body> -->
   <div id="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
     I am a sidebar! <br>
-    <button onclick="toggleTime()" id="time-button"> Enable time shift </button> <br>
+    <button onclick="toggleTime()" id="time-button"> Enable JS! </button> <br>
+    <button onclick="toggleColors()" id="color-button"> Enable JS! </button> <br>
     <select id="state-selector" name="selector" onchange="changedState()">
       <option value="vector">Vector field</option>
       <option value="heatmap">Heatmap</option>

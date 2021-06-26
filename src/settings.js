@@ -10,7 +10,8 @@ var settings = {
     maxFrameRate: 60,
     fpsBufferSize: 4,
     timeShift: false,
-    seed: generateSeed()
+    seed: generateSeed(),
+    coloring: false,
 };
 function generateSeed() {
     return Math.round(Math.random() * 999999);

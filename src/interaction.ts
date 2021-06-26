@@ -59,7 +59,7 @@ function changedState() {
 // called when time shift button is clicked
 function toggleTime() {
   const button = document.getElementById('time-button');
-  if (!settings.timeShift){
+  if (!settings.timeShift) {
     // enable
     button.innerText = "Disable time shift";
     settings.timeShift = true;
@@ -67,5 +67,36 @@ function toggleTime() {
     // disable
     button.innerText = "Enable time shift";
     settings.timeShift = false;
+  }
+}
+
+// called when time shift button is clicked
+function toggleColors() {
+  const button = document.getElementById('color-button');
+  if (!settings.coloring) {
+    // enable
+    button.innerText = "Disable coloring";
+    settings.coloring = true;
+  } else {
+    // disable
+    button.innerText = "Enable coloring";
+    settings.coloring = false;
+  }
+}
+
+// sets the buttons to the state appropriate to the current settings
+function setButtonStates() {
+  const time = document.getElementById('time-button');
+  const color = document.getElementById('color-button');
+
+  if (settings.timeShift) {
+    time.innerText = "Disable time shift";
+  } else {
+    time.innerText = "Enable time shift";
+  }
+  if (settings.coloring) {
+    color.innerText = "Disable coloring";
+  } else {
+    color.innerText = "Enable coloring";
   }
 }

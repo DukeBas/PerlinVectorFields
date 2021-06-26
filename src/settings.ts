@@ -13,7 +13,8 @@ const settings = {
   maxFrameRate: 60,
   fpsBufferSize: 4, // higher = smoother, but less accurate for the current moment
   timeShift: false,
-  seed: generateSeed()
+  seed: generateSeed(),
+  coloring: false,
 }
 
 // function to generate a random seed, to be used by random and perlin noise

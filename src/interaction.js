@@ -52,4 +52,31 @@ function toggleTime() {
         settings.timeShift = false;
     }
 }
+function toggleColors() {
+    var button = document.getElementById('color-button');
+    if (!settings.coloring) {
+        button.innerText = "Disable coloring";
+        settings.coloring = true;
+    }
+    else {
+        button.innerText = "Enable coloring";
+        settings.coloring = false;
+    }
+}
+function setButtonStates() {
+    var time = document.getElementById('time-button');
+    var color = document.getElementById('color-button');
+    if (settings.timeShift) {
+        time.innerText = "Disable time shift";
+    }
+    else {
+        time.innerText = "Enable time shift";
+    }
+    if (settings.coloring) {
+        color.innerText = "Disable coloring";
+    }
+    else {
+        color.innerText = "Enable coloring";
+    }
+}
 //# sourceMappingURL=TS/interaction.js.map
