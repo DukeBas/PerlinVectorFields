@@ -12,10 +12,12 @@ class Particle {
   }
 
   // takes a direction (in degrees) and adds speed to this particle in that direction
-  accelerate(dir: number, strength: number): void {
-    const acc = p5.Vector.fromAngle(dir * Math.PI / 180);
-    acc.setMag(strength);
+  accelerate(dir: number, strength: number, otherForces?: p5.Vector): void {
+    const acc = p5.Vector.fromAngle(dir * Math.PI / 180, strength);
     this.vel.add(acc);
+    if (otherForces !== undefined){
+      this.vel.add(otherForces);
+    }
     this.vel.limit(settings.maxSpeed);
   }
 
@@ -23,7 +25,6 @@ class Particle {
   applySpeed(): void {
     this.prev = this.pos.copy();
     this.pos.add(this.vel);
-
 
     // out of screen detection / wrapping
     if (this.pos.x > width) {
@@ -134,13 +135,76 @@ class ParticleSystem {
   }
 
   // updates the particles positions according to their speed, and updates their speed according to their location
-  updatePositions(grid: Grid) {
-    this.particles.forEach((p) => {
-      // change location, apply speed
-      p.applySpeed();
-      // change speed, apply acceleration based on location (direction of closest vector)
-      p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength)
-    });
+  updatePositions(grid: Grid, state: State) {
+    if (state != "polygon") {
+      this.particles.forEach((p) => {
+        // change location, apply speed
+        p.applySpeed();
+
+        // change speed, apply acceleration based on location (direction of closest vector)
+        p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength);
+      });
+    } else {
+      // for each point, calculate the applied force by comparing side length and desired side length
+      const vectorList: p5.Vector[] = [];
+      for (let i = 0; i < this.particles.length; i++) {
+        const previousParticle = this.particles[i - 1 == -1 ? this.particles.length - 1 : i - 1];
+        const thisParticle = this.particles[i];
+        const nextParticle = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
+
+        const leftDistance = dist(previousParticle.getX(),
+          previousParticle.getY(),
+          thisParticle.getX(),
+          thisParticle.getY());
+        const leftDifference = leftDistance - settings.polygonSideLength;
+        const leftVector = createVector(thisParticle.getX() - previousParticle.getX(),
+          thisParticle.getY() - previousParticle.getY())
+          .setMag(leftDifference);
+
+        const rightDistance = dist(thisParticle.getX(),
+          thisParticle.getY(),
+          nextParticle.getX(),
+          nextParticle.getY());
+        const rightDifference = rightDistance - settings.polygonSideLength;
+        const rightVector = createVector(thisParticle.getX() - nextParticle.getX(),
+          thisParticle.getY() - nextParticle.getY())
+          .setMag(rightDifference);
+
+        // add vectors to get total
+        leftVector.add(rightVector)
+
+        // normalise length
+        leftVector.limit(settings.polygonStrength);
+
+        // invert vector to make it point to the right side
+        leftVector.mult(-1);
+
+        // add vector to list
+        vectorList[i] = leftVector.copy();
+
+        // push();
+        // stroke(255,0,0)
+        // line(thisParticle.getX(),
+        // thisParticle.getY(),
+        // thisParticle.getX() + leftVector.x,
+        // thisParticle.getY() + leftVector.y);
+        // pop();
+      }
+
+      for (let i = 0; i < this.particles.length; i++) {
+        const p = this.particles[i];
+        // change location, apply speed
+        p.applySpeed();
+
+        // push();
+        // stroke(255,0,0)
+        // line(p.getX(), p.getY(), p.getX() + vectorList[i].x*10, p.getY() + vectorList[i].y*10);
+        // pop();
+
+        // apply acceleration based on vectorfield and other points in polygon
+        p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength, vectorList[i]);
+      }
+    }
   }
 }
 

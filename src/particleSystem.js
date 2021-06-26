@@ -4,10 +4,12 @@ var Particle = (function () {
         this.prev = createVector(x, y);
         this.vel = createVector(random(-settings.maxSpeed, settings.maxSpeed), random(-settings.maxSpeed, settings.maxSpeed));
     }
-    Particle.prototype.accelerate = function (dir, strength) {
-        var acc = p5.Vector.fromAngle(dir * Math.PI / 180);
-        acc.setMag(strength);
+    Particle.prototype.accelerate = function (dir, strength, otherForces) {
+        var acc = p5.Vector.fromAngle(dir * Math.PI / 180, strength);
         this.vel.add(acc);
+        if (otherForces !== undefined) {
+            this.vel.add(otherForces);
+        }
         this.vel.limit(settings.maxSpeed);
     };
     Particle.prototype.applySpeed = function () {
@@ -111,11 +113,38 @@ var ParticleSystem = (function () {
                 break;
         }
     };
-    ParticleSystem.prototype.updatePositions = function (grid) {
-        this.particles.forEach(function (p) {
-            p.applySpeed();
-            p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength);
-        });
+    ParticleSystem.prototype.updatePositions = function (grid, state) {
+        if (state != "polygon") {
+            this.particles.forEach(function (p) {
+                p.applySpeed();
+                p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength);
+            });
+        }
+        else {
+            var vectorList = [];
+            for (var i = 0; i < this.particles.length; i++) {
+                var previousParticle = this.particles[i - 1 == -1 ? this.particles.length - 1 : i - 1];
+                var thisParticle = this.particles[i];
+                var nextParticle = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
+                var leftDistance = dist(previousParticle.getX(), previousParticle.getY(), thisParticle.getX(), thisParticle.getY());
+                var leftDifference = leftDistance - settings.polygonSideLength;
+                var leftVector = createVector(thisParticle.getX() - previousParticle.getX(), thisParticle.getY() - previousParticle.getY())
+                    .setMag(leftDifference);
+                var rightDistance = dist(thisParticle.getX(), thisParticle.getY(), nextParticle.getX(), nextParticle.getY());
+                var rightDifference = rightDistance - settings.polygonSideLength;
+                var rightVector = createVector(thisParticle.getX() - nextParticle.getX(), thisParticle.getY() - nextParticle.getY())
+                    .setMag(rightDifference);
+                leftVector.add(rightVector);
+                leftVector.limit(settings.polygonStrength);
+                leftVector.mult(-1);
+                vectorList[i] = leftVector.copy();
+            }
+            for (var i = 0; i < this.particles.length; i++) {
+                var p = this.particles[i];
+                p.applySpeed();
+                p.accelerate(getNearestDirection(p.getX(), p.getY(), grid), settings.fieldStrength, vectorList[i]);
+            }
+        }
     };
     return ParticleSystem;
 }());

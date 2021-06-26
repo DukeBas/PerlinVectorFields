@@ -38,23 +38,23 @@ function draw() {
             background(0);
             grid.draw(state);
             particleSystem.draw(state);
-            particleSystem.updatePositions(grid);
+            particleSystem.updatePositions(grid, state);
             break;
         case "trails":
             background(0, 100);
             particleSystem.draw(state);
-            particleSystem.updatePositions(grid);
+            particleSystem.updatePositions(grid, state);
         case "strands":
             particleSystem.draw(state);
-            particleSystem.updatePositions(grid);
+            particleSystem.updatePositions(grid, state);
             break;
         case "n-line":
             nSystem.draw(state);
-            nSystem.updatePositions(grid);
+            nSystem.updatePositions(grid, state);
             break;
         case "polygon":
             nSystem.draw(state);
-            nSystem.updatePositions(grid);
+            nSystem.updatePositions(grid, state);
             break;
     }
     updateFps();
