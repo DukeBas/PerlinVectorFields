@@ -128,15 +128,14 @@ var ParticleSystem = (function () {
                 var nextParticle = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
                 var leftDistance = dist(previousParticle.getX(), previousParticle.getY(), thisParticle.getX(), thisParticle.getY());
                 var leftDifference = leftDistance - settings.polygonSideLength;
-                var leftVector = createVector(thisParticle.getX() - previousParticle.getX(), thisParticle.getY() - previousParticle.getY())
+                var leftVector = createVector(previousParticle.getX() - thisParticle.getX(), previousParticle.getY() - thisParticle.getY())
                     .setMag(leftDifference);
                 var rightDistance = dist(thisParticle.getX(), thisParticle.getY(), nextParticle.getX(), nextParticle.getY());
                 var rightDifference = rightDistance - settings.polygonSideLength;
-                var rightVector = createVector(thisParticle.getX() - nextParticle.getX(), thisParticle.getY() - nextParticle.getY())
+                var rightVector = createVector(nextParticle.getX() - thisParticle.getX(), nextParticle.getY() - thisParticle.getY())
                     .setMag(rightDifference);
                 leftVector.add(rightVector);
                 leftVector.limit(settings.polygonStrength);
-                leftVector.mult(-1);
                 vectorList[i] = leftVector.copy();
             }
             for (var i = 0; i < this.particles.length; i++) {

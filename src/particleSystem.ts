@@ -157,8 +157,8 @@ class ParticleSystem {
           thisParticle.getX(),
           thisParticle.getY());
         const leftDifference = leftDistance - settings.polygonSideLength;
-        const leftVector = createVector(thisParticle.getX() - previousParticle.getX(),
-          thisParticle.getY() - previousParticle.getY())
+        const leftVector = createVector(previousParticle.getX() - thisParticle.getX(),
+          previousParticle.getY() - thisParticle.getY())
           .setMag(leftDifference);
 
         const rightDistance = dist(thisParticle.getX(),
@@ -166,8 +166,8 @@ class ParticleSystem {
           nextParticle.getX(),
           nextParticle.getY());
         const rightDifference = rightDistance - settings.polygonSideLength;
-        const rightVector = createVector(thisParticle.getX() - nextParticle.getX(),
-          thisParticle.getY() - nextParticle.getY())
+        const rightVector = createVector(nextParticle.getX() - thisParticle.getX(),
+        nextParticle.getY() - thisParticle.getY())
           .setMag(rightDifference);
 
         // add vectors to get total
@@ -175,9 +175,6 @@ class ParticleSystem {
 
         // normalise length
         leftVector.limit(settings.polygonStrength);
-
-        // invert vector to make it point to the right side
-        leftVector.mult(-1);
 
         // add vector to list
         vectorList[i] = leftVector.copy();
