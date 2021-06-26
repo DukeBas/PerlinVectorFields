@@ -78,7 +78,7 @@ var ParticleSystem = (function () {
                 });
                 pop();
                 break;
-            case "x-line":
+            case "n-line":
                 push();
                 stroke(255, 20);
                 strokeWeight(1);

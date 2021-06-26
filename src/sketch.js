@@ -1,6 +1,6 @@
 var grid;
 var particleSystem;
-var triSystem;
+var nSystem;
 var fpsBuffer;
 function setup() {
     var canvas = createCanvas(windowWidth, windowHeight);
@@ -12,7 +12,7 @@ function setup() {
     noiseSeed(settings.seed);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
-    triSystem = new ParticleSystem(2 * settings.numberOfLinesXLine);
+    nSystem = new ParticleSystem(2 * settings.numberOfLinesNLine);
     fpsBuffer = [];
     for (var i = 0; i < settings.fpsBufferSize; i++) {
         fpsBuffer.push(settings.maxFrameRate);
@@ -48,9 +48,9 @@ function draw() {
             particleSystem.draw(state);
             particleSystem.updatePositions(grid);
             break;
-        case "x-line":
-            triSystem.draw(state);
-            triSystem.updatePositions(grid);
+        case "n-line":
+            nSystem.draw(state);
+            nSystem.updatePositions(grid);
             break;
     }
     updateFps();

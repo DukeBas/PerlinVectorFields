@@ -15,7 +15,7 @@ const settings = {
   timeShift: false,
   seed: generateSeed(),
   coloring: false,
-  numberOfLinesXLine: 3.
+  numberOfLinesNLine: 3.
 }
 
 // function to generate a random seed, to be used by random and perlin noise
@@ -28,3 +28,4 @@ function generateSeed(): number {
 // noise detail (perlin noise octaves)
 // noise time resistance slider
 // reset particles + button
+// state specific settings

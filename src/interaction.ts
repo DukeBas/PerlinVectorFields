@@ -49,7 +49,7 @@ function changedState() {
       frameRate(settings.maxFrameRate);
       background(0);
       break;
-    case "x-line":
+    case "n-line":
       frameRate(settings.maxFrameRate);
       background(0);
       break;

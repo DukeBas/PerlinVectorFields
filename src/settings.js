@@ -12,7 +12,7 @@ var settings = {
     timeShift: false,
     seed: generateSeed(),
     coloring: false,
-    numberOfLinesXLine: 3.
+    numberOfLinesNLine: 3.
 };
 function generateSeed() {
     return Math.round(Math.random() * 999999);
