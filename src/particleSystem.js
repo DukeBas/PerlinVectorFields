@@ -62,8 +62,17 @@ var ParticleSystem = (function () {
                 break;
             case "trails":
                 push();
-                stroke(255, 5);
+                stroke(255, 100);
                 strokeWeight(2);
+                this.particles.forEach(function (p) {
+                    p.draw(state);
+                });
+                pop();
+                break;
+            case "strands":
+                push();
+                stroke(255, 4);
+                strokeWeight(1);
                 this.particles.forEach(function (p) {
                     p.draw(state);
                 });

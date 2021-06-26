@@ -73,7 +73,7 @@ class ParticleSystem {
     switch (state) {
       case "particles":
         push();
-        stroke(255, 100)
+        stroke(255, 100);
         strokeWeight(5);
         this.particles.forEach((p) => {
           p.draw(state);
@@ -82,8 +82,17 @@ class ParticleSystem {
         break;
       case "trails":
         push();
-        stroke(255, 5)
+        stroke(255, 100);
         strokeWeight(2);
+        this.particles.forEach((p) => {
+          p.draw(state);
+        });
+        pop();
+        break;
+      case "strands":
+        push();
+        stroke(255, 4);
+        strokeWeight(1);
         this.particles.forEach((p) => {
           p.draw(state);
         });
