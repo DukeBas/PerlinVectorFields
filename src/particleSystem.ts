@@ -123,7 +123,7 @@ class ParticleSystem {
         colorMode(HSL);
         for (let i = 0; i < this.particles.length; i += 1) {
           if (settings.coloring) {
-            stroke(i * (360 / numberOfLines), 100, 50, 0.1);
+            stroke(i * (360 / this.particles.length), 100, 50, 0.1);
           }
           const p1 = this.particles[i];
           const p2 = this.particles[i + 1 == this.particles.length ? 0 : i + 1];

@@ -103,7 +103,7 @@ var ParticleSystem = (function () {
                 colorMode(HSL);
                 for (var i = 0; i < this.particles.length; i += 1) {
                     if (settings.coloring) {
-                        stroke(i * (360 / numberOfLines), 100, 50, 0.1);
+                        stroke(i * (360 / this.particles.length), 100, 50, 0.1);
                     }
                     var p1 = this.particles[i];
                     var p2 = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
