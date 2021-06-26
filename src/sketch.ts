@@ -14,6 +14,9 @@ function setup() {
 
   // set background to black
   background(255);
+  
+  // set random seed
+  randomSeed(settings.seed)
 
   // create a grid
   grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
@@ -72,6 +75,7 @@ function draw() {
   updateFps();
 }
 
-
-
-
+// function to download the current canvas
+function downloadCanvas() {
+  saveCanvas(settings.seed.toString(), "png");
+}

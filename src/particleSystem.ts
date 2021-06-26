@@ -91,7 +91,7 @@ class ParticleSystem {
         break;
       case "strands":
         push();
-        stroke(255, 4);
+        stroke(255, 2);
         strokeWeight(1);
         this.particles.forEach((p) => {
           p.draw(state);

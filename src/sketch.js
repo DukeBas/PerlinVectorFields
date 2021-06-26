@@ -7,6 +7,7 @@ function setup() {
     canvas.style('z-index', '-1');
     frameRate(settings.maxFrameRate);
     background(255);
+    randomSeed(settings.seed);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
     fpsBuffer = [];
@@ -46,5 +47,8 @@ function draw() {
             break;
     }
     updateFps();
+}
+function downloadCanvas() {
+    saveCanvas(settings.seed.toString(), "png");
 }
 //# sourceMappingURL=TS/sketch.js.map

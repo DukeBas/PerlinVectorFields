@@ -71,7 +71,7 @@ var ParticleSystem = (function () {
                 break;
             case "strands":
                 push();
-                stroke(255, 4);
+                stroke(255, 2);
                 strokeWeight(1);
                 this.particles.forEach(function (p) {
                     p.draw(state);
