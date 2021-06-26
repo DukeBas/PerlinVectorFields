@@ -16,7 +16,8 @@ function setup() {
   background(255);
   
   // set random seed
-  randomSeed(settings.seed)
+  randomSeed(settings.seed);
+  noiseSeed(settings.seed);
 
   // create a grid
   grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);

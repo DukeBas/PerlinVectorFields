@@ -8,6 +8,7 @@ function setup() {
     frameRate(settings.maxFrameRate);
     background(255);
     randomSeed(settings.seed);
+    noiseSeed(settings.seed);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
     fpsBuffer = [];
