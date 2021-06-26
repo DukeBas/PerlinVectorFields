@@ -6,11 +6,13 @@ class Grid {
   hor: number;  // number of horizontal cells
   vert: number; // number of vertical cells
   cells: Cell[][]; // variable holding the cells
+  timeSteps: number; // used for keeping track of how many steps have preceded
 
   constructor(numHorizontalCells: number, numVerticalCells: number) {
     this.hor = numHorizontalCells;
     this.vert = numVerticalCells;
-    this.cells = []
+    this.cells = [];
+    this.timeSteps = 0;
 
     // initialise colums
     for (let i = 0; i < numHorizontalCells; i++) {
@@ -44,9 +46,10 @@ class Grid {
 
   // use 3d noise, for time dimension
   noiseStep() {
+    this.timeSteps++;
     for (let i = 0; i < this.hor; i++) {
       for (let j = 0; j < this.vert; j++) {
-        const direction = settings.noiseDifference * noise(i / 25, j / 25, frameCount / settings.noiseTimeResistance) * 360;
+        const direction = settings.noiseDifference * noise(i / 25, j / 25, this.timeSteps / settings.noiseTimeResistance) * 360;
         this.cells[i][j] = { dir: direction };
       }
     }

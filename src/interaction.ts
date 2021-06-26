@@ -45,6 +45,9 @@ function changedState() {
     case "trails":
       frameRate(settings.maxFrameRate);
       background(0);
+    case "strands":
+      frameRate(settings.maxFrameRate);
+      background(0);
       break;
   }
 }

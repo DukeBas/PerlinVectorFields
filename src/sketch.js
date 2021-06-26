@@ -37,6 +37,10 @@ function draw() {
             particleSystem.updatePositions(grid);
             break;
         case "trails":
+            background(0, 100);
+            particleSystem.draw(state);
+            particleSystem.updatePositions(grid);
+        case "strands":
             particleSystem.draw(state);
             particleSystem.updatePositions(grid);
             break;

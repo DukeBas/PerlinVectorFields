@@ -3,7 +3,7 @@ let particleSystem: ParticleSystem;
 let fpsBuffer: number[];  // used to smooth out fps counter
 
 // Possible states, gotten from selector
-type State = "vector" | "heatmap" | "particles" | "trails";
+type State = "vector" | "heatmap" | "particles" | "trails" | "strands";
 
 // run before first drawn frame
 function setup() {
@@ -60,6 +60,10 @@ function draw() {
       particleSystem.updatePositions(grid);
       break;
     case "trails":
+      background(0, 100);
+      particleSystem.draw(state);
+      particleSystem.updatePositions(grid);
+    case "strands":
       particleSystem.draw(state);
       particleSystem.updatePositions(grid);
       break;
