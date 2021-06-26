@@ -11,7 +11,7 @@ const settings = {
   noiseTimeResistance: 500, // how much each time step changes the angles. higher = less change 
   slowFrameRate: 30,
   maxFrameRate: 60,
-  fpsBufferSize: 4, // higher = smoother
+  fpsBufferSize: 4, // higher = smoother, but less accurate for the current moment
   timeShift: false,
   seed: generateSeed()
 }

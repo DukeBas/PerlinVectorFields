@@ -7,7 +7,8 @@ class Particle {
   constructor(x: number, y: number) {
     this.pos = createVector(x, y);
     this.prev = createVector(x, y);
-    this.vel = createVector(0, 0);
+    this.vel = createVector(random(-settings.maxSpeed, settings.maxSpeed),
+      random(-settings.maxSpeed, settings.maxSpeed));
   }
 
   // takes a direction (in degrees) and adds speed to this particle in that direction
@@ -102,9 +103,9 @@ class ParticleSystem {
         push();
         stroke(255, 20);
         strokeWeight(1);
-        for (let i = 0; i < 6; i += 2){
+        for (let i = 0; i < 6; i += 2) {
           const p1 = this.particles[i];
-          const p2 = this.particles[i+1];
+          const p2 = this.particles[i + 1];
           line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
         }
         pop();

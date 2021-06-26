@@ -2,7 +2,7 @@ var Particle = (function () {
     function Particle(x, y) {
         this.pos = createVector(x, y);
         this.prev = createVector(x, y);
-        this.vel = createVector(0, 0);
+        this.vel = createVector(random(-settings.maxSpeed, settings.maxSpeed), random(-settings.maxSpeed, settings.maxSpeed));
     }
     Particle.prototype.accelerate = function (dir, strength) {
         var acc = p5.Vector.fromAngle(dir * Math.PI / 180);
