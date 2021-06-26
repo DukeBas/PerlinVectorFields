@@ -104,13 +104,28 @@ class ParticleSystem {
         stroke(255, 20);
         strokeWeight(1);
         colorMode(HSL)
-        const numberOfLines = Math.floor(this.particles.length/2);
+        const numberOfLines = Math.floor(this.particles.length / 2);
         for (let i = 0; i < numberOfLines; i += 1) {
           if (settings.coloring) {
-            stroke(i * (360/numberOfLines), 100, 50, 0.1);
+            stroke(i * (360 / numberOfLines), 100, 50, 0.1);
           }
           const p1 = this.particles[2 * i];
           const p2 = this.particles[2 * i + 1];
+          line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        }
+        pop();
+        break;
+      case "polygon":
+        push();
+        stroke(255, 20);
+        strokeWeight(1);
+        colorMode(HSL);
+        for (let i = 0; i < this.particles.length; i += 1) {
+          if (settings.coloring) {
+            stroke(i * (360 / numberOfLines), 100, 50, 0.1);
+          }
+          const p1 = this.particles[i];
+          const p2 = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
           line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
         }
         pop();

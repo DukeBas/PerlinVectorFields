@@ -52,6 +52,10 @@ function draw() {
             nSystem.draw(state);
             nSystem.updatePositions(grid);
             break;
+        case "polygon":
+            nSystem.draw(state);
+            nSystem.updatePositions(grid);
+            break;
     }
     updateFps();
 }

@@ -4,7 +4,13 @@ let nSystem: ParticleSystem;
 let fpsBuffer: number[];  // used to smooth out fps counter
 
 // Possible states, gotten from selector
-type State = "vector" | "heatmap" | "particles" | "trails" | "strands" | "n-line";
+type State = "vector" 
+| "heatmap" 
+| "particles" 
+| "trails" 
+| "strands" 
+| "n-line" 
+| "polygon";
 
 // run before first drawn frame
 function setup() {
@@ -74,6 +80,10 @@ function draw() {
       particleSystem.updatePositions(grid);
       break;
     case "n-line":
+      nSystem.draw(state);
+      nSystem.updatePositions(grid);
+      break;
+    case "polygon":
       nSystem.draw(state);
       nSystem.updatePositions(grid);
       break;

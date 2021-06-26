@@ -94,6 +94,21 @@ var ParticleSystem = (function () {
                 }
                 pop();
                 break;
+            case "polygon":
+                push();
+                stroke(255, 20);
+                strokeWeight(1);
+                colorMode(HSL);
+                for (var i = 0; i < this.particles.length; i += 1) {
+                    if (settings.coloring) {
+                        stroke(i * (360 / numberOfLines), 100, 50, 0.1);
+                    }
+                    var p1 = this.particles[i];
+                    var p2 = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
+                    line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+                }
+                pop();
+                break;
         }
     };
     ParticleSystem.prototype.updatePositions = function (grid) {

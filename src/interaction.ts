@@ -53,6 +53,10 @@ function changedState() {
       frameRate(settings.maxFrameRate);
       background(0);
       break;
+    case "polygon":
+      frameRate(settings.maxFrameRate);
+      background(0);
+      break;
   }
 }
 
