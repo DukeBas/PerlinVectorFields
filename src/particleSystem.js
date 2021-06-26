@@ -78,6 +78,17 @@ var ParticleSystem = (function () {
                 });
                 pop();
                 break;
+            case "tri-line":
+                push();
+                stroke(255, 20);
+                strokeWeight(1);
+                for (var i = 0; i < 6; i += 2) {
+                    var p1 = this.particles[i];
+                    var p2 = this.particles[i + 1];
+                    line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+                }
+                pop();
+                break;
         }
     };
     ParticleSystem.prototype.updatePositions = function (grid) {

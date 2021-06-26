@@ -1,9 +1,10 @@
 let grid: Grid;
 let particleSystem: ParticleSystem;
+let triSystem: ParticleSystem;
 let fpsBuffer: number[];  // used to smooth out fps counter
 
 // Possible states, gotten from selector
-type State = "vector" | "heatmap" | "particles" | "trails" | "strands";
+type State = "vector" | "heatmap" | "particles" | "trails" | "strands" | "tri-line";
 
 // run before first drawn frame
 function setup() {
@@ -14,7 +15,7 @@ function setup() {
 
   // set background to black
   background(255);
-  
+
   // set random seed
   randomSeed(settings.seed);
   noiseSeed(settings.seed);
@@ -22,8 +23,9 @@ function setup() {
   // create a grid
   grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
 
-  // create particle system
+  // create particle systems
   particleSystem = new ParticleSystem(settings.numParticles);
+  triSystem = new ParticleSystem(6);
 
   // set up fps buffer
   fpsBuffer = [];
@@ -70,6 +72,10 @@ function draw() {
     case "strands":
       particleSystem.draw(state);
       particleSystem.updatePositions(grid);
+      break;
+    case "tri-line":
+      triSystem.draw(state);
+      triSystem.updatePositions(grid);
       break;
   }
 
