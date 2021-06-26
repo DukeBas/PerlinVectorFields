@@ -10,6 +10,9 @@ var settings = {
     maxFrameRate: 60,
     fpsBufferSize: 4,
     timeShift: false,
-    seed: Math.round(Math.random() * 999999)
+    seed: generateSeed()
 };
+function generateSeed() {
+    return Math.round(Math.random() * 999999);
+}
 //# sourceMappingURL=TS/settings.js.map

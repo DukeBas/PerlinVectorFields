@@ -13,7 +13,12 @@ const settings = {
   maxFrameRate: 60,
   fpsBufferSize: 4, // higher = smoother
   timeShift: false,
-  seed: Math.round(Math.random()*999999)
+  seed: generateSeed()
+}
+
+// function to generate a random seed, to be used by random and perlin noise
+function generateSeed(): number {
+  return Math.round(Math.random()*999999)
 }
 
 //TODO
