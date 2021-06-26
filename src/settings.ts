@@ -3,7 +3,7 @@ const settings = {
   // Variables for total cells, each cell holding a direction
   numHorizontalCells: 60,
   numVerticalCells: 40,
-  numParticles: 2500,
+  numParticles: 1000,
   maxSpeed: 1.75,
   fieldStrength: 0.005, // how strong the acceleration is of a vector to a particle
   polygonStrength: 0.05, // how strong the acceleration is of particles in a polygon
@@ -31,3 +31,4 @@ function generateSeed(): number {
 // noise time resistance slider
 // reset particles + button
 // state specific settings
+// second canvas overtop the first for non-trailing things

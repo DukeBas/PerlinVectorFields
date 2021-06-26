@@ -1,7 +1,7 @@
 var settings = {
     numHorizontalCells: 60,
     numVerticalCells: 40,
-    numParticles: 2500,
+    numParticles: 1000,
     maxSpeed: 1.75,
     fieldStrength: 0.005,
     polygonStrength: 0.05,
