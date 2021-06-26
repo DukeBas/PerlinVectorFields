@@ -21,16 +21,16 @@
   <div id="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
     I am a sidebar! <br>
-    <button onclick="toggleTime()" id="time-button"> Enable JS! </button> <br>
-    <button onclick="toggleColors()" id="color-button"> Enable JS! </button> <br>
     <select id="state-selector" name="selector" onchange="changedState()">
       <option value="vector">Vector field</option>
       <option value="heatmap">Heatmap</option>
       <option value="particles">Particles</option>
       <option value="trails">Trails</option>
       <option value="strands">Strands</option>
-      <option value="tri-line" selected>Tri-line</option>
+      <option value="x-line" selected>X-line</option>
     </select>
+    <button onclick="toggleTime()" id="time-button"> Enable JS! </button> <br>
+    <button onclick="toggleColors()" id="color-button"> Enable JS! </button> <br>
     <a href="https://github.com/DukeBas/PerlinVectorFields">
       <img src="GitHub-light.png" alt="Github link" id="GitHub">
     </a>

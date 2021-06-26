@@ -12,7 +12,7 @@ function setup() {
     noiseSeed(settings.seed);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
-    triSystem = new ParticleSystem(6);
+    triSystem = new ParticleSystem(2 * settings.numberOfLinesXLine);
     fpsBuffer = [];
     for (var i = 0; i < settings.fpsBufferSize; i++) {
         fpsBuffer.push(settings.maxFrameRate);
@@ -48,7 +48,7 @@ function draw() {
             particleSystem.draw(state);
             particleSystem.updatePositions(grid);
             break;
-        case "tri-line":
+        case "x-line":
             triSystem.draw(state);
             triSystem.updatePositions(grid);
             break;

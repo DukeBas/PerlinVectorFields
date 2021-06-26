@@ -35,7 +35,7 @@ function changedState() {
             frameRate(settings.maxFrameRate);
             background(0);
             break;
-        case "tri-line":
+        case "x-line":
             frameRate(settings.maxFrameRate);
             background(0);
             break;

@@ -4,7 +4,7 @@ let triSystem: ParticleSystem;
 let fpsBuffer: number[];  // used to smooth out fps counter
 
 // Possible states, gotten from selector
-type State = "vector" | "heatmap" | "particles" | "trails" | "strands" | "tri-line";
+type State = "vector" | "heatmap" | "particles" | "trails" | "strands" | "x-line";
 
 // run before first drawn frame
 function setup() {
@@ -25,7 +25,7 @@ function setup() {
 
   // create particle systems
   particleSystem = new ParticleSystem(settings.numParticles);
-  triSystem = new ParticleSystem(6);
+  triSystem = new ParticleSystem(2 * settings.numberOfLinesXLine);
 
   // set up fps buffer
   fpsBuffer = [];
@@ -73,7 +73,7 @@ function draw() {
       particleSystem.draw(state);
       particleSystem.updatePositions(grid);
       break;
-    case "tri-line":
+    case "x-line":
       triSystem.draw(state);
       triSystem.updatePositions(grid);
       break;

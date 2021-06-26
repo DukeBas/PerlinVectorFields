@@ -15,6 +15,7 @@ const settings = {
   timeShift: false,
   seed: generateSeed(),
   coloring: false,
+  numberOfLinesXLine: 3.
 }
 
 // function to generate a random seed, to be used by random and perlin noise
