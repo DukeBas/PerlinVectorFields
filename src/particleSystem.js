@@ -8,7 +8,7 @@ var Particle = (function () {
         var acc = p5.Vector.fromAngle(dir * Math.PI / 180);
         acc.setMag(strength);
         this.vel.add(acc);
-        this.vel.limit(5);
+        this.vel.limit(settings.maxSpeed);
     };
     Particle.prototype.applySpeed = function () {
         this.prev = this.pos.copy();

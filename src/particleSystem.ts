@@ -15,7 +15,7 @@ class Particle {
     const acc = p5.Vector.fromAngle(dir * Math.PI / 180);
     acc.setMag(strength);
     this.vel.add(acc);
-    this.vel.limit(5);
+    this.vel.limit(settings.maxSpeed);
   }
 
   // adds x and y speed values to x and y location values

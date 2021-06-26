@@ -38,9 +38,7 @@ function changedState() {
     }
 }
 function toggleTime() {
-    console.log("test");
     var button = document.getElementById('time-button');
-    console.log(button);
     if (!settings.timeShift) {
         button.innerText = "Disable time shift";
         settings.timeShift = true;

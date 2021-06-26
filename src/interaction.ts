@@ -54,9 +54,7 @@ function changedState() {
 
 // called when time shift button is clicked
 function toggleTime() {
-  console.log("test")
   const button = document.getElementById('time-button');
-  console.log(button)
   if (!settings.timeShift){
     // enable
     button.innerText = "Disable time shift";

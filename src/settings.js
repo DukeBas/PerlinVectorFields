@@ -1,9 +1,9 @@
 var settings = {
     numHorizontalCells: 60,
     numVerticalCells: 40,
-    numParticles: 200,
-    maxSpeed: 5,
-    fieldStrength: 0.02,
+    numParticles: 250,
+    maxSpeed: 1.75,
+    fieldStrength: 0.005,
     noiseDifference: 2,
     noiseTimeResistance: 500,
     slowFrameRate: 30,
