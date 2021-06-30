@@ -20,17 +20,6 @@ const settings = {
   polygonSideLength: 100, // in pixels
 }
 
-// variable to keep track of what simulation uses which specific system
-const simUsesSystem = {
-  vector: "particleSystem",
-  heatmap: "particleSystem",
-  particles: "particleSystem",
-  trails: "particleSystem",
-  strands: "particleSystem",
-  nLine: "nSystem",
-  polygon: "nSystem",
-}
-
 // function to generate a random seed, to be used by random and perlin noise
 function generateSeed(): number {
   return Math.round(Math.random()*999999999999)
@@ -40,6 +29,5 @@ function generateSeed(): number {
 // noise seed (+ show / alter in sidebar)
 // noise detail (perlin noise octaves)
 // noise time resistance slider
-// reset particles + button
 // state specific settings (sliders)
 // second canvas overtop the first for non-trailing things

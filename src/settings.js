@@ -16,15 +16,6 @@ var settings = {
     numberOfParticlesNSystem: 6,
     polygonSideLength: 100,
 };
-var simUsesSystem = {
-    vector: "particleSystem",
-    heatmap: "particleSystem",
-    particles: "particleSystem",
-    trails: "particleSystem",
-    strands: "particleSystem",
-    nLine: "nSystem",
-    polygon: "nSystem",
-};
 function generateSeed() {
     return Math.round(Math.random() * 999999999999);
 }
