@@ -16,6 +16,7 @@ var settings = {
     polygonSideLength: 100,
     maxNumParticles: 10000,
     maxNumParticlesNSystem: 100,
+    paused: false,
 };
 function generateSeed() {
     return Math.round(Math.random() * 999999999999);

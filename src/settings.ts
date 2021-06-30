@@ -19,6 +19,7 @@ const settings = {
   polygonSideLength: 100, // in pixels
   maxNumParticles: 10000,
   maxNumParticlesNSystem: 100,
+  paused: false,
 }
 
 // function to generate a random seed, to be used by random and perlin noise

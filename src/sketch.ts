@@ -91,3 +91,16 @@ function draw() {
 
   updateFps();
 }
+
+// called when the user presses a key on their keyboard
+function keyPressed() {
+  // pause when spacebar is hit
+  if (keyCode === 32) { 
+    settings.paused = !settings.paused;
+    if (settings.paused) {
+      frameRate(0);
+    } else {
+      frameRate(60);
+    }
+  }
+}

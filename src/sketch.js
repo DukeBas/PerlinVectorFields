@@ -59,4 +59,15 @@ function draw() {
     }
     updateFps();
 }
+function keyPressed() {
+    if (keyCode === 32) {
+        settings.paused = !settings.paused;
+        if (settings.paused) {
+            frameRate(0);
+        }
+        else {
+            frameRate(60);
+        }
+    }
+}
 //# sourceMappingURL=TS/sketch.js.map
