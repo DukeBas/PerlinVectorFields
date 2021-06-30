@@ -22,25 +22,12 @@ function changedState() {
     switch (state) {
         case "vector":
         case "heatmap":
-            frameRate(settings.slowFrameRate);
             break;
         case "particles":
-            frameRate(settings.maxFrameRate);
-            background(0);
-            break;
         case "trails":
-            frameRate(settings.maxFrameRate);
-            background(0);
         case "strands":
-            frameRate(settings.maxFrameRate);
-            background(0);
-            break;
         case "n-line":
-            frameRate(settings.maxFrameRate);
-            background(0);
-            break;
         case "polygon":
-            frameRate(settings.maxFrameRate);
             background(0);
             break;
     }

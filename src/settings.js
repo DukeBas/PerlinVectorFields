@@ -7,7 +7,6 @@ var settings = {
     polygonStrength: 0.05,
     noiseDifference: 3,
     noiseTimeResistance: 500,
-    slowFrameRate: 30,
     maxFrameRate: 60,
     fpsBufferSize: 4,
     timeShift: false,
