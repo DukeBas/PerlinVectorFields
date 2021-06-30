@@ -100,15 +100,11 @@ class Grid {
         strokeWeight(0.5);
         for (let i = 0; i < this.hor; i++) {
           for (let j = 0; j < this.vert; j++) {
-            const cell = this.cells[i][j];
-            const locX = i * cellWidth;
-            const locY = j * cellHeight;
+            const loc = createVector((i + 0.5) * cellWidth, (j + 0.5) * cellHeight);
+            const dir = p5.Vector.fromAngle(this.cells[i][j].dir* (Math.PI / 180));
+            dir.setMag(Math.min(cellWidth/2, cellHeight/2));
 
-            line(locX + cellWidth / 2,
-              locY + cellHeight / 2,
-              locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))),
-              locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180)))
-            );
+            line(loc.x, loc.y, loc.x+dir.x, loc.y+dir.y);
           }
         }
         pop();
