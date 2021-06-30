@@ -45,12 +45,15 @@ var Particle = (function () {
 }());
 var ParticleSystem = (function () {
     function ParticleSystem(numberOfParticles) {
+        this.generateParticles(numberOfParticles);
+    }
+    ParticleSystem.prototype.generateParticles = function (numberOfParticles) {
         this.particles = [];
         for (var i = 0; i < numberOfParticles; i++) {
             var p = new Particle(randX(), randY());
             this.particles.push(p);
         }
-    }
+    };
     ParticleSystem.prototype.draw = function (state) {
         switch (state) {
             case "particles":

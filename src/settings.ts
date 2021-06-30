@@ -16,8 +16,19 @@ const settings = {
   timeShift: false,
   seed: generateSeed(),
   coloring: false,
-  numberOfLinesNLine: 3,
+  numberOfParticlesNSystem: 6,
   polygonSideLength: 100, // in pixels
+}
+
+// variable to keep track of what simulation uses which specific system
+const simUsesSystem = {
+  vector: "particleSystem",
+  heatmap: "particleSystem",
+  particles: "particleSystem",
+  trails: "particleSystem",
+  strands: "particleSystem",
+  nLine: "nSystem",
+  polygon: "nSystem",
 }
 
 // function to generate a random seed, to be used by random and perlin noise

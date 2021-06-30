@@ -31,7 +31,7 @@ function setup() {
 
   // create particle systems
   particleSystem = new ParticleSystem(settings.numParticles);
-  nSystem = new ParticleSystem(2 * settings.numberOfLinesNLine);
+  nSystem = new ParticleSystem(settings.numberOfParticlesNSystem);
 
   // set up fps buffer
   fpsBuffer = [];

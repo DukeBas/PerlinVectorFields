@@ -104,3 +104,9 @@ function setButtonStates() {
     color.innerText = "Enable coloring";
   }
 }
+
+// regenerates the particles in the particles systems
+function resetParticles() {
+  particleSystem.generateParticles(settings.numParticles);
+  nSystem.generateParticles(settings.numberOfParticlesNSystem);
+} 

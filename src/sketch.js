@@ -12,7 +12,7 @@ function setup() {
     noiseSeed(settings.seed);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
-    nSystem = new ParticleSystem(2 * settings.numberOfLinesNLine);
+    nSystem = new ParticleSystem(settings.numberOfParticlesNSystem);
     fpsBuffer = [];
     for (var i = 0; i < settings.fpsBufferSize; i++) {
         fpsBuffer.push(settings.maxFrameRate);

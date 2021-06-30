@@ -83,4 +83,8 @@ function setButtonStates() {
         color.innerText = "Enable coloring";
     }
 }
+function resetParticles() {
+    particleSystem.generateParticles(settings.numParticles);
+    nSystem.generateParticles(settings.numberOfParticlesNSystem);
+}
 //# sourceMappingURL=TS/interaction.js.map
