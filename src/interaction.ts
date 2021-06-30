@@ -70,6 +70,7 @@ function updateSettings(state: State) {
       particleSlider.type = "range";
       particleSlider.min = "0";
       particleSlider.max = settings.maxNumParticles.toString();
+      particleSlider.value = settings.numParticles.toString();
       particleSliderBox.appendChild(particleSlider);
 
       break;
