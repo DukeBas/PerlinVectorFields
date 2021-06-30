@@ -15,7 +15,7 @@ class Particle {
   accelerate(dir: number, strength: number, otherForces?: p5.Vector): void {
     const acc = p5.Vector.fromAngle(dir * Math.PI / 180, strength);
     this.vel.add(acc);
-    if (otherForces !== undefined){
+    if (otherForces !== undefined) {
       this.vel.add(otherForces);
     }
     this.vel.limit(settings.maxSpeed);
@@ -63,7 +63,14 @@ class ParticleSystem {
   particles: Particle[];
 
   constructor(numberOfParticles: number) {
+    this.generateParticles(numberOfParticles);
+  }
+
+  generateParticles(numberOfParticles: number) {
+    // create/clear particles array
     this.particles = [];
+
+    // generate new particles
     for (let i = 0; i < numberOfParticles; i++) {
       let p = new Particle(randX(), randY());
       this.particles.push(p);
@@ -167,7 +174,7 @@ class ParticleSystem {
           nextParticle.getY());
         const rightDifference = rightDistance - settings.polygonSideLength;
         const rightVector = createVector(nextParticle.getX() - thisParticle.getX(),
-        nextParticle.getY() - thisParticle.getY())
+          nextParticle.getY() - thisParticle.getY())
           .setMag(rightDifference);
 
         // add vectors to get total
