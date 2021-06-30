@@ -34,15 +34,44 @@ function changedState() {
 
   // change things based on the new state
   switch (state) {
-    case "vector":
-    case "heatmap":
-      break;
     case "particles":
     case "trails":
     case "strands":
     case "n-line":
     case "polygon":
       background(0);
+      break;
+  }
+
+  // update settings box
+  updateSettings(state);
+}
+
+// called when the simulation specific settings need to be altered
+function updateSettings(state: State) {
+  const settingsContainer = document.getElementById('settings');
+
+  // clear current settings
+  settingsContainer.innerHTML = "";
+
+  // add settings based on the current state
+  switch (state) {
+    case "particles":
+      // particle slider box to contain the slider and some text
+      const particleSliderBox = document.createElement('div');
+      settingsContainer.appendChild(particleSliderBox);
+
+      // number of particles text
+      const particleText = document.createElement('span');
+      settingsContainer.appendChild(particleText);
+
+      // add particle slider
+      const particleSlider = document.createElement('input');
+      particleSlider.type = "range";
+      particleSlider.min = "0";
+      particleSlider.max = settings.maxNumParticles.toString();
+      particleSliderBox.appendChild(particleSlider);
+
       break;
   }
 }
@@ -96,7 +125,7 @@ function setButtonStates() {
 function resetParticles() {
   particleSystem.generateParticles(settings.numParticles);
   nSystem.generateParticles(settings.numberOfParticlesNSystem);
-} 
+}
 
 // function to download the current canvas
 function downloadCanvas() {

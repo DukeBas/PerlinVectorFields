@@ -17,6 +17,8 @@ const settings = {
   coloring: false,
   numberOfParticlesNSystem: 6,
   polygonSideLength: 100, // in pixels
+  maxNumParticles: 10000,
+  maxNumParticlesNSystem: 100,
 }
 
 // function to generate a random seed, to be used by random and perlin noise
@@ -29,3 +31,4 @@ function generateSeed(): number {
 // noise time resistance slider
 // state specific settings (sliders)
 // second canvas overtop the first for non-trailing things
+// possibly remove wrapping and use modulo to draw

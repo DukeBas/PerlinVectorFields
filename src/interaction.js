@@ -20,15 +20,30 @@ function updateFps() {
 function changedState() {
     var state = getCurrentState();
     switch (state) {
-        case "vector":
-        case "heatmap":
-            break;
         case "particles":
         case "trails":
         case "strands":
         case "n-line":
         case "polygon":
             background(0);
+            break;
+    }
+    updateSettings(state);
+}
+function updateSettings(state) {
+    var settingsContainer = document.getElementById('settings');
+    settingsContainer.innerHTML = "";
+    switch (state) {
+        case "particles":
+            var particleSliderBox = document.createElement('div');
+            settingsContainer.appendChild(particleSliderBox);
+            var particleText = document.createElement('span');
+            settingsContainer.appendChild(particleText);
+            var particleSlider = document.createElement('input');
+            particleSlider.type = "range";
+            particleSlider.min = "0";
+            particleSlider.max = settings.maxNumParticles.toString();
+            particleSliderBox.appendChild(particleSlider);
             break;
     }
 }
