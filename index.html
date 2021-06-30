@@ -18,6 +18,7 @@
 
 <body onload="openSidebar(); setButtonStates();">
 <!-- <body> -->
+  <noscript>Please enable JavaScript</noscript>
   <div id="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
     <select id="state-selector" name="selector" onchange="changedState()">
@@ -28,8 +29,8 @@
       <option value="n-line">n-line</option>
       <option value="polygon" selected>Polygon</option>
     </select>
-    <button onclick="toggleTime()" id="time-button"> Enable JS! </button> <br>
-    <button onclick="toggleColors()" id="color-button"> Enable JS! </button> <br>
+    <button onclick="toggleTime()" id="time-button"> Time button </button> <br>
+    <button onclick="toggleColors()" id="color-button"> Color button </button> <br>
     <a href="https://github.com/DukeBas/PerlinVectorFields">
       <img src="GitHub-light.png" alt="Github link" id="GitHub">
     </a>
