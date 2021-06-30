@@ -59,7 +59,4 @@ function draw() {
     }
     updateFps();
 }
-function downloadCanvas() {
-    saveCanvas(settings.seed.toString(), "png");
-}
 //# sourceMappingURL=TS/sketch.js.map

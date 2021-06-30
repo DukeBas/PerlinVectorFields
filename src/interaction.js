@@ -87,4 +87,7 @@ function resetParticles() {
     particleSystem.generateParticles(settings.numParticles);
     nSystem.generateParticles(settings.numberOfParticlesNSystem);
 }
+function downloadCanvas() {
+    saveCanvas(settings.seed.toString(), "png");
+}
 //# sourceMappingURL=TS/interaction.js.map

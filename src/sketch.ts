@@ -91,8 +91,3 @@ function draw() {
 
   updateFps();
 }
-
-// function to download the current canvas
-function downloadCanvas() {
-  saveCanvas(settings.seed.toString(), "png");
-}

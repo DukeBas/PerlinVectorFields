@@ -110,3 +110,8 @@ function resetParticles() {
   particleSystem.generateParticles(settings.numParticles);
   nSystem.generateParticles(settings.numberOfParticlesNSystem);
 } 
+
+// function to download the current canvas
+function downloadCanvas() {
+  saveCanvas(settings.seed.toString(), "png");
+}
