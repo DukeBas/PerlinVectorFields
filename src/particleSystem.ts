@@ -87,7 +87,6 @@ class ParticleSystem {
 
   // adds or removes particles to get to a new number of particles in the simulation
   updateNumberOfParticles(newNum: number): void {
-    console.log(this)
     if (newNum > this.particles.length){
       // add particles
       for (let pToGo = newNum - this.particles.length; pToGo > 0; pToGo--){

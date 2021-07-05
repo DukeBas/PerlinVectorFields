@@ -61,7 +61,6 @@ var ParticleSystem = (function () {
         }
     };
     ParticleSystem.prototype.updateNumberOfParticles = function (newNum) {
-        console.log(this);
         if (newNum > this.particles.length) {
             for (var pToGo = newNum - this.particles.length; pToGo > 0; pToGo--) {
                 var p = new Particle(randX(), randY());

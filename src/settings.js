@@ -4,7 +4,7 @@ var settings = {
     numParticles: 1000,
     maxSpeed: 1.75,
     fieldStrength: 0.005,
-    minFieldStrength: 0.05,
+    minFieldStrength: 0.005,
     maxFieldStrength: 1,
     polygonStrength: 0.05,
     noiseDifference: 3,

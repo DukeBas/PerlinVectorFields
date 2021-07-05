@@ -96,7 +96,7 @@ function createSliderElement(
   }
   // update simulation
   Slider.onchange = () => {
-    const val = parseInt(Slider.value);
+    const val = parseFloat(Slider.value);
     settings.numParticles = val;
     updateFunction(val);
   }

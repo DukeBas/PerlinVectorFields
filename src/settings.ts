@@ -6,7 +6,7 @@ const settings = {
   numParticles: 1000,
   maxSpeed: 1.75,
   fieldStrength: 0.005, // how strong the acceleration is of a vector to a particle
-  minFieldStrength: 0.05,
+  minFieldStrength: 0.005,
   maxFieldStrength: 1,
   polygonStrength: 0.05, // how strong the acceleration is of particles in a polygon
   noiseDifference: 3, // how much difference each step of noise makes (ex: 1, 0 to 1 gets mapped to 0 to 360 degrees,)

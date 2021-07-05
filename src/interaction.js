@@ -56,7 +56,7 @@ function createSliderElement(Name, settingName, minSliderValue, maxSliderValue, 
         TextBox.innerHTML = Slider.value;
     };
     Slider.onchange = function () {
-        var val = parseInt(Slider.value);
+        var val = parseFloat(Slider.value);
         settings.numParticles = val;
         updateFunction(val);
     };
