@@ -25,6 +25,7 @@ const settings = {
   maxNumParticles: 5000,
   maxNumParticlesNSystem: 100,
   paused: false,
+  noiseOctaves: 4,
 }
 
 // function to generate a random seed, to be used by random and perlin noise

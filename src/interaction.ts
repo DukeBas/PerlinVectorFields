@@ -60,6 +60,7 @@ function updateSettings(state: State) {
       settingsContainer.appendChild(createParticleSystemSlider());
       settingsContainer.appendChild(createMaxSpeedSlider());
       settingsContainer.appendChild(createFieldStrengthSlider());
+      settingsContainer.appendChild(createNoiseDetailSlider());
 
       break;
   }
@@ -98,8 +99,7 @@ function createSliderElement(
   }
   // update simulation
   Slider.onchange = () => {
-    const val = parseFloat(Slider.value);
-    updateFunction(val);
+    updateFunction( parseFloat(Slider.value));
   }
   SliderBox.append(document.createElement('br'));
   SliderBox.appendChild(Slider);
@@ -138,6 +138,20 @@ function createMaxSpeedSlider(): HTMLElement {
     settings.maxMaxSpeed,
     0.1,
     (val: number) => {settings.maxSpeed = val;}
+  )
+}
+function createNoiseDetailSlider(): HTMLElement {
+  return createSliderElement(
+    "Noise detail",
+    "noiseOctaves",
+    1,
+    9,
+    1,
+    (val: number) => {
+      noiseDetail(val, 0.5);
+      grid.generateNoisedCells();
+      settings.noiseOctaves = val;
+    }
   )
 }
 

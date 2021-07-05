@@ -22,6 +22,7 @@ var settings = {
     maxNumParticles: 5000,
     maxNumParticlesNSystem: 100,
     paused: false,
+    noiseOctaves: 4,
 };
 function generateSeed() {
     return Math.round(Math.random() * 999999999999);

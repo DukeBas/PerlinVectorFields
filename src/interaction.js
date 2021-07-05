@@ -38,6 +38,7 @@ function updateSettings(state) {
             settingsContainer.appendChild(createParticleSystemSlider());
             settingsContainer.appendChild(createMaxSpeedSlider());
             settingsContainer.appendChild(createFieldStrengthSlider());
+            settingsContainer.appendChild(createNoiseDetailSlider());
             break;
     }
 }
@@ -58,8 +59,7 @@ function createSliderElement(Name, settingName, minSliderValue, maxSliderValue, 
         TextBox.innerHTML = Slider.value;
     };
     Slider.onchange = function () {
-        var val = parseFloat(Slider.value);
-        updateFunction(val);
+        updateFunction(parseFloat(Slider.value));
     };
     SliderBox.append(document.createElement('br'));
     SliderBox.appendChild(Slider);
@@ -76,6 +76,13 @@ function createFieldStrengthSlider() {
 }
 function createMaxSpeedSlider() {
     return createSliderElement("Maximum speed", "maxSpeed", settings.minMaxSpeed, settings.maxMaxSpeed, 0.1, function (val) { settings.maxSpeed = val; });
+}
+function createNoiseDetailSlider() {
+    return createSliderElement("Noise detail", "noiseOctaves", 1, 9, 1, function (val) {
+        noiseDetail(val, 0.5);
+        grid.generateNoisedCells();
+        settings.noiseOctaves = val;
+    });
 }
 function toggleTime() {
     var button = document.getElementById('time-button');
