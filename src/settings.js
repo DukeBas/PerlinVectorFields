@@ -3,6 +3,8 @@ var settings = {
     numVerticalCells: 40,
     numParticles: 1000,
     maxSpeed: 1.75,
+    minMaxSpeed: 0.5,
+    maxMaxSpeed: 5,
     fieldStrength: 0.005,
     minFieldStrength: 0.005,
     maxFieldStrength: 1,

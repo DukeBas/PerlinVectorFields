@@ -58,6 +58,7 @@ function updateSettings(state: State) {
   switch (state) {
     case "particles":
       settingsContainer.appendChild(createParticleSystemSlider());
+      settingsContainer.appendChild(createMaxSpeedSlider());
       settingsContainer.appendChild(createFieldStrengthSlider());
 
       break;
@@ -116,7 +117,6 @@ function createParticleSystemSlider(): HTMLElement {
     (val: number) => {particleSystem.updateNumberOfParticles(val)}
   )
 }
-
 function createFieldStrengthSlider(): HTMLElement {
   return createSliderElement(
     "Field strength",
@@ -125,6 +125,16 @@ function createFieldStrengthSlider(): HTMLElement {
     settings.maxFieldStrength,
     0.001,
     (val: number) => {settings.fieldStrength = val}
+  )
+}
+function createMaxSpeedSlider(): HTMLElement {
+  return createSliderElement(
+    "Maximum speed",
+    "maxSpeed",
+    settings.minMaxSpeed,
+    settings.maxMaxSpeed,
+    0.1,
+    (val: number) => {settings.maxSpeed = val}
   )
 }
 

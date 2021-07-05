@@ -36,6 +36,7 @@ function updateSettings(state) {
     switch (state) {
         case "particles":
             settingsContainer.appendChild(createParticleSystemSlider());
+            settingsContainer.appendChild(createMaxSpeedSlider());
             settingsContainer.appendChild(createFieldStrengthSlider());
             break;
     }
@@ -69,6 +70,9 @@ function createParticleSystemSlider() {
 }
 function createFieldStrengthSlider() {
     return createSliderElement("Field strength", "fieldStrength", settings.minFieldStrength, settings.maxFieldStrength, 0.001, function (val) { settings.fieldStrength = val; });
+}
+function createMaxSpeedSlider() {
+    return createSliderElement("Maximum speed", "maxSpeed", settings.minMaxSpeed, settings.maxMaxSpeed, 0.1, function (val) { settings.maxSpeed = val; });
 }
 function toggleTime() {
     var button = document.getElementById('time-button');
