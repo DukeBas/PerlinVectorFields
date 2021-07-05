@@ -35,9 +35,25 @@ function updateSettings(state) {
     settingsContainer.innerHTML = "";
     switch (state) {
         case "particles":
+        case "trails":
+        case "strands":
             settingsContainer.appendChild(createParticleSystemSlider());
             settingsContainer.appendChild(createMaxSpeedSlider());
             settingsContainer.appendChild(createFieldStrengthSlider());
+            settingsContainer.appendChild(createNoiseDetailSlider());
+            break;
+        case "n-line":
+            settingsContainer.appendChild(createNSystemSlider());
+            settingsContainer.appendChild(createMaxSpeedSlider());
+            settingsContainer.appendChild(createFieldStrengthSlider());
+            settingsContainer.appendChild(createNoiseDetailSlider());
+            break;
+        case "polygon":
+            settingsContainer.appendChild(createNSystemSlider());
+            settingsContainer.appendChild(createMaxSpeedSlider());
+            settingsContainer.appendChild(createFieldStrengthSlider());
+            settingsContainer.appendChild(createPolygonSidelengthSlider());
+            settingsContainer.appendChild(createPolygonStrengthSlider());
             settingsContainer.appendChild(createNoiseDetailSlider());
             break;
     }
@@ -71,8 +87,20 @@ function createParticleSystemSlider() {
         particleSystem.updateNumberOfParticles(val);
     });
 }
+function createNSystemSlider() {
+    return createSliderElement("Number of particles", "numberOfParticlesNSystem", settings.minNumParticlesNSystem, settings.maxNumParticlesNSystem, 2, function (val) {
+        settings.numberOfParticlesNSystem = val;
+        nSystem.updateNumberOfParticles(val);
+    });
+}
 function createFieldStrengthSlider() {
     return createSliderElement("Field strength", "fieldStrength", settings.minFieldStrength, settings.maxFieldStrength, 0.001, function (val) { settings.fieldStrength = val; });
+}
+function createPolygonSidelengthSlider() {
+    return createSliderElement("Polygon sidelength", "polygonSideLength", settings.minPolygonSideLength, settings.maxPolygonSideLength, 1, function (val) { settings.polygonSideLength = val; });
+}
+function createPolygonStrengthSlider() {
+    return createSliderElement("Polygon strength", "polygonStrength", settings.minPolygonStrength, settings.maxPolygonStrength, 0.001, function (val) { settings.fieldStrength = val; });
 }
 function createMaxSpeedSlider() {
     return createSliderElement("Maximum speed", "maxSpeed", settings.minMaxSpeed, settings.maxMaxSpeed, 0.1, function (val) { settings.maxSpeed = val; });

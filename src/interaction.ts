@@ -57,11 +57,26 @@ function updateSettings(state: State) {
   // add settings based on the current state
   switch (state) {
     case "particles":
+    case "trails":
+    case "strands":
       settingsContainer.appendChild(createParticleSystemSlider());
       settingsContainer.appendChild(createMaxSpeedSlider());
       settingsContainer.appendChild(createFieldStrengthSlider());
       settingsContainer.appendChild(createNoiseDetailSlider());
-
+      break;
+    case "n-line":
+      settingsContainer.appendChild(createNSystemSlider());
+      settingsContainer.appendChild(createMaxSpeedSlider());
+      settingsContainer.appendChild(createFieldStrengthSlider());
+      settingsContainer.appendChild(createNoiseDetailSlider());
+      break;
+    case "polygon":
+      settingsContainer.appendChild(createNSystemSlider());
+      settingsContainer.appendChild(createMaxSpeedSlider());
+      settingsContainer.appendChild(createFieldStrengthSlider());
+      settingsContainer.appendChild(createPolygonSidelengthSlider());
+      settingsContainer.appendChild(createPolygonStrengthSlider());
+      settingsContainer.appendChild(createNoiseDetailSlider());
       break;
   }
 }
@@ -70,12 +85,12 @@ function updateSettings(state: State) {
 function createSliderElement(
   Name: string, // Word used above slider
   // Name of setting that is altered by the slider
-  settingName: keyof typeof settings, 
+  settingName: keyof typeof settings,
   minSliderValue: number,
   maxSliderValue: number,
   stepSize: number,
   updateFunction: Function, // function to be called to put the setting into effect
-  ): HTMLElement {
+): HTMLElement {
   // slider box to contain the slider and some text
   const SliderBox = document.createElement('div');
   SliderBox.innerText = Name + ": ";
@@ -99,7 +114,7 @@ function createSliderElement(
   }
   // update simulation
   Slider.onchange = () => {
-    updateFunction( parseFloat(Slider.value));
+    updateFunction(parseFloat(Slider.value));
   }
   SliderBox.append(document.createElement('br'));
   SliderBox.appendChild(Slider);
@@ -120,6 +135,19 @@ function createParticleSystemSlider(): HTMLElement {
     }
   )
 }
+function createNSystemSlider(): HTMLElement {
+  return createSliderElement(
+    "Number of particles",
+    "numberOfParticlesNSystem",
+    settings.minNumParticlesNSystem,
+    settings.maxNumParticlesNSystem,
+    2,
+    (val: number) => {
+      settings.numberOfParticlesNSystem = val;
+      nSystem.updateNumberOfParticles(val);
+    }
+  )
+}
 function createFieldStrengthSlider(): HTMLElement {
   return createSliderElement(
     "Field strength",
@@ -127,7 +155,27 @@ function createFieldStrengthSlider(): HTMLElement {
     settings.minFieldStrength,
     settings.maxFieldStrength,
     0.001,
-    (val: number) => {settings.fieldStrength = val;}
+    (val: number) => { settings.fieldStrength = val; }
+  )
+}
+function createPolygonSidelengthSlider(): HTMLElement {
+  return createSliderElement(
+    "Polygon sidelength",
+    "polygonSideLength",
+    settings.minPolygonSideLength,
+    settings.maxPolygonSideLength,
+    1,
+    (val: number) => { settings.polygonSideLength = val; }
+  )
+}
+function createPolygonStrengthSlider(): HTMLElement {
+  return createSliderElement(
+    "Polygon strength",
+    "polygonStrength",
+    settings.minPolygonStrength,
+    settings.maxPolygonStrength,
+    0.001,
+    (val: number) => { settings.fieldStrength = val; }
   )
 }
 function createMaxSpeedSlider(): HTMLElement {
@@ -137,7 +185,7 @@ function createMaxSpeedSlider(): HTMLElement {
     settings.minMaxSpeed,
     settings.maxMaxSpeed,
     0.1,
-    (val: number) => {settings.maxSpeed = val;}
+    (val: number) => { settings.maxSpeed = val; }
   )
 }
 function createNoiseDetailSlider(): HTMLElement {
