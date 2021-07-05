@@ -1,6 +1,6 @@
 var settings = {
-    numHorizontalCells: 60,
-    numVerticalCells: 40,
+    numHorizontalCells: 64,
+    numVerticalCells: 36,
     numParticles: 1000,
     maxSpeed: 1.75,
     minMaxSpeed: 0.5,

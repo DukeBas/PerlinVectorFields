@@ -54,8 +54,6 @@ function createSliderElement(Name, settingName, minSliderValue, maxSliderValue, 
     Slider.max = maxSliderValue.toString();
     Slider.step = stepSize.toString();
     Slider.value = settings[settingName].toString();
-    console.log(settingName, Slider.value, settings[settingName].toString());
-    console.log(settings);
     Slider.oninput = function () {
         TextBox.innerHTML = Slider.value;
     };
