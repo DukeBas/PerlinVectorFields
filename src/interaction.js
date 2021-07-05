@@ -36,15 +36,19 @@ function updateSettings(state) {
     switch (state) {
         case "particles":
             var particleSliderBox = document.createElement('div');
+            particleSliderBox.innerText = "Particles" + ": ";
             settingsContainer.appendChild(particleSliderBox);
-            var particleText = document.createElement('span');
-            settingsContainer.appendChild(particleText);
-            var particleSlider = document.createElement('input');
-            particleSlider.type = "range";
-            particleSlider.min = "0";
-            particleSlider.max = settings.maxNumParticles.toString();
-            particleSlider.value = settings.numParticles.toString();
-            particleSliderBox.appendChild(particleSlider);
+            var particleText_1 = document.createElement('span');
+            particleSliderBox.appendChild(particleText_1);
+            var particleSlider_1 = document.createElement('input');
+            particleSlider_1.type = "range";
+            particleSlider_1.min = "0";
+            particleSlider_1.max = settings.maxNumParticles.toString();
+            particleSlider_1.value = settings.numParticles.toString();
+            particleSlider_1.oninput = function () {
+                particleText_1.innerHTML = particleSlider_1.value;
+            };
+            settingsContainer.appendChild(particleSlider_1);
             break;
     }
 }

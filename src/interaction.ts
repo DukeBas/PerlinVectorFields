@@ -59,11 +59,12 @@ function updateSettings(state: State) {
     case "particles":
       // particle slider box to contain the slider and some text
       const particleSliderBox = document.createElement('div');
+      particleSliderBox.innerText = "Particles" + ": ";
       settingsContainer.appendChild(particleSliderBox);
 
       // number of particles text
       const particleText = document.createElement('span');
-      settingsContainer.appendChild(particleText);
+      particleSliderBox.appendChild(particleText);
 
       // add particle slider
       const particleSlider = document.createElement('input');
@@ -71,7 +72,10 @@ function updateSettings(state: State) {
       particleSlider.min = "0";
       particleSlider.max = settings.maxNumParticles.toString();
       particleSlider.value = settings.numParticles.toString();
-      particleSliderBox.appendChild(particleSlider);
+      particleSlider.oninput = () => {
+        particleText.innerHTML = particleSlider.value;
+      }
+      settingsContainer.appendChild(particleSlider);
 
       break;
   }
