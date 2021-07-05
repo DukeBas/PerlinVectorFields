@@ -31,7 +31,7 @@ function setup() {
 
   // create particle systems
   particleSystem = new ParticleSystem(settings.numParticles);
-  nSystem = new ParticleSystem(2 * settings.numberOfLinesNLine);
+  nSystem = new ParticleSystem(settings.numberOfParticlesNSystem);
 
   // set up fps buffer
   fpsBuffer = [];
@@ -80,10 +80,10 @@ function draw() {
       particleSystem.updatePositions(grid, state);
       break;
     case "n-line":
-      nSystem.draw(state); 
-      nSystem.updatePositions(grid, state);
-      break;
     case "polygon":
+      if (!settings.nPersistency) {
+        background(0, 70);
+      }
       nSystem.draw(state);
       nSystem.updatePositions(grid, state);
       break;
@@ -92,7 +92,15 @@ function draw() {
   updateFps();
 }
 
-// function to download the current canvas
-function downloadCanvas() {
-  saveCanvas(settings.seed.toString(), "png");
+// called when the user presses a key on their keyboard
+function keyPressed() {
+  // pause when spacebar is hit
+  if (keyCode === 32) { 
+    settings.paused = !settings.paused;
+    if (settings.paused) {
+      frameRate(0);
+    } else {
+      frameRate(60);
+    }
+  }
 }

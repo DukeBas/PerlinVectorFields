@@ -41,16 +41,36 @@ var Particle = (function () {
     Particle.prototype.getY = function () {
         return this.pos.y;
     };
+    Particle.prototype.getVelX = function () {
+        return this.vel.x;
+    };
+    Particle.prototype.getVelY = function () {
+        return this.vel.y;
+    };
     return Particle;
 }());
 var ParticleSystem = (function () {
     function ParticleSystem(numberOfParticles) {
+        this.generateParticles(numberOfParticles);
+    }
+    ParticleSystem.prototype.generateParticles = function (numberOfParticles) {
         this.particles = [];
         for (var i = 0; i < numberOfParticles; i++) {
             var p = new Particle(randX(), randY());
             this.particles.push(p);
         }
-    }
+    };
+    ParticleSystem.prototype.updateNumberOfParticles = function (newNum) {
+        if (newNum > this.particles.length) {
+            for (var pToGo = newNum - this.particles.length; pToGo > 0; pToGo--) {
+                var p = new Particle(randX(), randY());
+                this.particles.push(p);
+            }
+        }
+        else if (newNum < this.particles.length) {
+            this.particles = this.particles.splice(0, newNum);
+        }
+    };
     ParticleSystem.prototype.draw = function (state) {
         switch (state) {
             case "particles":
@@ -58,6 +78,11 @@ var ParticleSystem = (function () {
                 stroke(255, 100);
                 strokeWeight(5);
                 this.particles.forEach(function (p) {
+                    if (settings.coloring) {
+                        var R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+                        var B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+                        stroke(R, 0, B, 255);
+                    }
                     p.draw(state);
                 });
                 pop();
@@ -67,6 +92,11 @@ var ParticleSystem = (function () {
                 stroke(255, 100);
                 strokeWeight(2);
                 this.particles.forEach(function (p) {
+                    if (settings.coloring) {
+                        var R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+                        var B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+                        stroke(R, 0, B, 100);
+                    }
                     p.draw(state);
                 });
                 pop();
@@ -76,14 +106,25 @@ var ParticleSystem = (function () {
                 stroke(255, 2);
                 strokeWeight(1);
                 this.particles.forEach(function (p) {
+                    if (settings.coloring) {
+                        var R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+                        var B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+                        stroke(R, 0, B, 3);
+                    }
                     p.draw(state);
                 });
                 pop();
                 break;
             case "n-line":
                 push();
-                stroke(255, 20);
-                strokeWeight(1);
+                if (settings.nPersistency) {
+                    stroke(255, 20);
+                    strokeWeight(1);
+                }
+                else {
+                    stroke(255, 100);
+                    strokeWeight(2);
+                }
                 colorMode(HSL);
                 var numberOfLines = Math.floor(this.particles.length / 2);
                 for (var i = 0; i < numberOfLines; i += 1) {
@@ -98,12 +139,18 @@ var ParticleSystem = (function () {
                 break;
             case "polygon":
                 push();
-                stroke(255, 20);
-                strokeWeight(1);
+                if (settings.nPersistency) {
+                    stroke(255, 20);
+                    strokeWeight(1);
+                }
+                else {
+                    stroke(255, 100);
+                    strokeWeight(1);
+                }
                 colorMode(HSL);
                 for (var i = 0; i < this.particles.length; i += 1) {
                     if (settings.coloring) {
-                        stroke(i * (360 / numberOfLines), 100, 50, 0.1);
+                        stroke(i * (360 / this.particles.length), 100, 50, 0.1);
                     }
                     var p1 = this.particles[i];
                     var p2 = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
@@ -128,15 +175,14 @@ var ParticleSystem = (function () {
                 var nextParticle = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
                 var leftDistance = dist(previousParticle.getX(), previousParticle.getY(), thisParticle.getX(), thisParticle.getY());
                 var leftDifference = leftDistance - settings.polygonSideLength;
-                var leftVector = createVector(thisParticle.getX() - previousParticle.getX(), thisParticle.getY() - previousParticle.getY())
+                var leftVector = createVector(previousParticle.getX() - thisParticle.getX(), previousParticle.getY() - thisParticle.getY())
                     .setMag(leftDifference);
                 var rightDistance = dist(thisParticle.getX(), thisParticle.getY(), nextParticle.getX(), nextParticle.getY());
                 var rightDifference = rightDistance - settings.polygonSideLength;
-                var rightVector = createVector(thisParticle.getX() - nextParticle.getX(), thisParticle.getY() - nextParticle.getY())
+                var rightVector = createVector(nextParticle.getX() - thisParticle.getX(), nextParticle.getY() - thisParticle.getY())
                     .setMag(rightDifference);
                 leftVector.add(rightVector);
                 leftVector.limit(settings.polygonStrength);
-                leftVector.mult(-1);
                 vectorList[i] = leftVector.copy();
             }
             for (var i = 0; i < this.particles.length; i++) {

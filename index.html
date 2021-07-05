@@ -14,31 +14,35 @@
 
   <!-- <link rel="shortcut icon" href="" /> -->
   <!-- <link rel="icon" href="" /> -->
+  <title>PerlinVectorFields</title>
 </head>
 
 <body onload="openSidebar(); setButtonStates();">
 <!-- <body> -->
+  <noscript>Please enable JavaScript</noscript>
   <div id="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
-    I am a sidebar! <br>
     <select id="state-selector" name="selector" onchange="changedState()">
-      <option value="vector">Vector field</option>
-      <option value="heatmap">Heatmap</option>
+      <!-- <option value="vector">Vector field</option> -->
+      <!-- <option value="heatmap">Heatmap</option> -->
       <option value="particles">Particles</option>
       <option value="trails">Trails</option>
       <option value="strands">Strands</option>
       <option value="n-line">n-line</option>
-      <option value="polygon" selected>Polygon</option>
+      <option value="polygon">Polygon</option>
     </select>
-    <button onclick="toggleTime()" id="time-button"> Enable JS! </button> <br>
-    <button onclick="toggleColors()" id="color-button"> Enable JS! </button> <br>
+    <button onclick="toggleTime()" id="time-button"> Time button </button> <br>
+    <button onclick="toggleColors()" id="color-button"> Color button </button> <br>
     <a href="https://github.com/DukeBas/PerlinVectorFields">
       <img src="GitHub-light.png" alt="Github link" id="GitHub">
     </a>
     <div id="fps-container"></div>
     <span id="fps">0</span><span> fps</span> <br>
     <br> <br> <br>
-    <button onclick="changedState()" id="reset-button">Reset canvas</button> 
+    <div id="settings"></div>
+    <br> <br> <br>
+    <button onclick="resetParticles()" id="reset-particles-button">Reset Particles</button> 
+    <button onclick="changedState()" id="reset-state-button">Reset canvas</button> 
     <button onclick="downloadCanvas()" id="download-button">Download canvas</button> 
   </div>
 </body>

@@ -12,7 +12,7 @@ function setup() {
     noiseSeed(settings.seed);
     grid = new Grid(settings.numHorizontalCells, settings.numVerticalCells);
     particleSystem = new ParticleSystem(settings.numParticles);
-    nSystem = new ParticleSystem(2 * settings.numberOfLinesNLine);
+    nSystem = new ParticleSystem(settings.numberOfParticlesNSystem);
     fpsBuffer = [];
     for (var i = 0; i < settings.fpsBufferSize; i++) {
         fpsBuffer.push(settings.maxFrameRate);
@@ -49,17 +49,25 @@ function draw() {
             particleSystem.updatePositions(grid, state);
             break;
         case "n-line":
-            nSystem.draw(state);
-            nSystem.updatePositions(grid, state);
-            break;
         case "polygon":
+            if (!settings.nPersistency) {
+                background(0, 70);
+            }
             nSystem.draw(state);
             nSystem.updatePositions(grid, state);
             break;
     }
     updateFps();
 }
-function downloadCanvas() {
-    saveCanvas(settings.seed.toString(), "png");
+function keyPressed() {
+    if (keyCode === 32) {
+        settings.paused = !settings.paused;
+        if (settings.paused) {
+            frameRate(0);
+        }
+        else {
+            frameRate(60);
+        }
+    }
 }
 //# sourceMappingURL=TS/sketch.js.map

@@ -73,10 +73,10 @@ var Grid = (function () {
                 strokeWeight(0.5);
                 for (var i = 0; i < this.hor; i++) {
                     for (var j = 0; j < this.vert; j++) {
-                        var cell = this.cells[i][j];
-                        var locX = i * cellWidth;
-                        var locY = j * cellHeight;
-                        line(locX + cellWidth / 2, locY + cellHeight / 2, locX + cellMin / 2 * (1 + Math.cos(cell.dir * (Math.PI / 180))), locY + cellMin / 2 * (1 + Math.sin(cell.dir * (Math.PI / 180))));
+                        var loc = createVector((i + 0.5) * cellWidth, (j + 0.5) * cellHeight);
+                        var dir = p5.Vector.fromAngle(this.cells[i][j].dir * (Math.PI / 180));
+                        dir.setMag(Math.min(cellWidth / 2, cellHeight / 2));
+                        line(loc.x, loc.y, loc.x + dir.x, loc.y + dir.y);
                     }
                 }
                 pop();

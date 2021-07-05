@@ -15,7 +15,7 @@ class Particle {
   accelerate(dir: number, strength: number, otherForces?: p5.Vector): void {
     const acc = p5.Vector.fromAngle(dir * Math.PI / 180, strength);
     this.vel.add(acc);
-    if (otherForces !== undefined){
+    if (otherForces !== undefined) {
       this.vel.add(otherForces);
     }
     this.vel.limit(settings.maxSpeed);
@@ -57,16 +57,45 @@ class Particle {
   getY(): number {
     return this.pos.y;
   }
+
+  getVelX(): number {
+    return this.vel.x;
+  }
+
+  getVelY(): number {
+    return this.vel.y;
+  }
 }
 
 class ParticleSystem {
   particles: Particle[];
 
   constructor(numberOfParticles: number) {
+    this.generateParticles(numberOfParticles);
+  }
+
+  generateParticles(numberOfParticles: number) {
+    // create/clear particles array
     this.particles = [];
+
+    // generate new particles
     for (let i = 0; i < numberOfParticles; i++) {
       let p = new Particle(randX(), randY());
       this.particles.push(p);
+    }
+  }
+
+  // adds or removes particles to get to a new number of particles in the simulation
+  updateNumberOfParticles(newNum: number): void {
+    if (newNum > this.particles.length) {
+      // add particles
+      for (let pToGo = newNum - this.particles.length; pToGo > 0; pToGo--) {
+        let p = new Particle(randX(), randY());
+        this.particles.push(p);
+      }
+    } else if (newNum < this.particles.length) {
+      // remove particles
+      this.particles = this.particles.splice(0, newNum);
     }
   }
 
@@ -78,6 +107,11 @@ class ParticleSystem {
         stroke(255, 100);
         strokeWeight(5);
         this.particles.forEach((p) => {
+          if (settings.coloring) {
+            const R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+            const B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+            stroke(R, 0, B, 255);
+          }
           p.draw(state);
         });
         pop();
@@ -87,6 +121,11 @@ class ParticleSystem {
         stroke(255, 100);
         strokeWeight(2);
         this.particles.forEach((p) => {
+          if (settings.coloring) {
+            const R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+            const B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+            stroke(R, 0, B, 100);
+          }
           p.draw(state);
         });
         pop();
@@ -96,14 +135,24 @@ class ParticleSystem {
         stroke(255, 2);
         strokeWeight(1);
         this.particles.forEach((p) => {
+          if (settings.coloring) {
+            const R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+            const B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+            stroke(R, 0, B, 3);
+          }
           p.draw(state);
         });
         pop();
         break;
       case "n-line":
         push();
-        stroke(255, 20);
-        strokeWeight(1);
+        if (settings.nPersistency) {
+          stroke(255, 20);
+          strokeWeight(1);
+        } else {
+          stroke(255, 100);
+          strokeWeight(2);
+        }
         colorMode(HSL)
         const numberOfLines = Math.floor(this.particles.length / 2);
         for (let i = 0; i < numberOfLines; i += 1) {
@@ -118,12 +167,17 @@ class ParticleSystem {
         break;
       case "polygon":
         push();
-        stroke(255, 20);
-        strokeWeight(1);
+        if (settings.nPersistency) {
+          stroke(255, 20);
+          strokeWeight(1);
+        } else {
+          stroke(255, 100);
+          strokeWeight(1);
+        }
         colorMode(HSL);
         for (let i = 0; i < this.particles.length; i += 1) {
           if (settings.coloring) {
-            stroke(i * (360 / numberOfLines), 100, 50, 0.1);
+            stroke(i * (360 / this.particles.length), 100, 50, 0.1);
           }
           const p1 = this.particles[i];
           const p2 = this.particles[i + 1 == this.particles.length ? 0 : i + 1];
@@ -157,8 +211,8 @@ class ParticleSystem {
           thisParticle.getX(),
           thisParticle.getY());
         const leftDifference = leftDistance - settings.polygonSideLength;
-        const leftVector = createVector(thisParticle.getX() - previousParticle.getX(),
-          thisParticle.getY() - previousParticle.getY())
+        const leftVector = createVector(previousParticle.getX() - thisParticle.getX(),
+          previousParticle.getY() - thisParticle.getY())
           .setMag(leftDifference);
 
         const rightDistance = dist(thisParticle.getX(),
@@ -166,18 +220,15 @@ class ParticleSystem {
           nextParticle.getX(),
           nextParticle.getY());
         const rightDifference = rightDistance - settings.polygonSideLength;
-        const rightVector = createVector(thisParticle.getX() - nextParticle.getX(),
-          thisParticle.getY() - nextParticle.getY())
+        const rightVector = createVector(nextParticle.getX() - thisParticle.getX(),
+          nextParticle.getY() - thisParticle.getY())
           .setMag(rightDifference);
 
         // add vectors to get total
         leftVector.add(rightVector)
 
-        // normalise length
+        // define maximum length vector
         leftVector.limit(settings.polygonStrength);
-
-        // invert vector to make it point to the right side
-        leftVector.mult(-1);
 
         // add vector to list
         vectorList[i] = leftVector.copy();
