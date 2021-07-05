@@ -31,16 +31,10 @@ const settings = {
   maxNumParticlesNSystem: 100,
   paused: false,
   noiseOctaves: 4,
+  nPersistency: true, // determines persistency for nSystem simulations
 }
 
 // function to generate a random seed, to be used by random and perlin noise
 function generateSeed(): number {
   return Math.round(Math.random()*999999999999)
 }
-
-//TODO
-// noise detail (perlin noise octaves)
-// noise time resistance slider
-// state specific settings (sliders)
-// second canvas overtop the first for non-trailing things
-// possibly remove wrapping and use modulo to draw

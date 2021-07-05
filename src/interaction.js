@@ -47,6 +47,7 @@ function updateSettings(state) {
             settingsContainer.appendChild(createMaxSpeedSlider());
             settingsContainer.appendChild(createFieldStrengthSlider());
             settingsContainer.appendChild(createNoiseDetailSlider());
+            settingsContainer.appendChild(createNTrailsButtion());
             break;
         case "polygon":
             settingsContainer.appendChild(createNSystemSlider());
@@ -55,6 +56,7 @@ function updateSettings(state) {
             settingsContainer.appendChild(createPolygonSidelengthSlider());
             settingsContainer.appendChild(createPolygonStrengthSlider());
             settingsContainer.appendChild(createNoiseDetailSlider());
+            settingsContainer.appendChild(createNTrailsButtion());
             break;
     }
 }
@@ -80,6 +82,15 @@ function createSliderElement(Name, settingName, minSliderValue, maxSliderValue, 
     SliderBox.append(document.createElement('br'));
     SliderBox.appendChild(Slider);
     return SliderBox;
+}
+function createNTrailsButtion() {
+    var button = document.createElement('button');
+    button.innerHTML = "Toggle persistency";
+    button.onclick = function () {
+        settings.nPersistency = !settings.nPersistency;
+        changedState();
+    };
+    return button;
 }
 function createParticleSystemSlider() {
     return createSliderElement("Number of particles", "numParticles", settings.minNumParticles, settings.maxNumParticles, 1, function (val) {

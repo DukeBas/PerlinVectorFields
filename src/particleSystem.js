@@ -117,8 +117,14 @@ var ParticleSystem = (function () {
                 break;
             case "n-line":
                 push();
-                stroke(255, 20);
-                strokeWeight(1);
+                if (settings.nPersistency) {
+                    stroke(255, 20);
+                    strokeWeight(1);
+                }
+                else {
+                    stroke(255, 100);
+                    strokeWeight(2);
+                }
                 colorMode(HSL);
                 var numberOfLines = Math.floor(this.particles.length / 2);
                 for (var i = 0; i < numberOfLines; i += 1) {
@@ -133,8 +139,14 @@ var ParticleSystem = (function () {
                 break;
             case "polygon":
                 push();
-                stroke(255, 20);
-                strokeWeight(1);
+                if (settings.nPersistency) {
+                    stroke(255, 20);
+                    strokeWeight(1);
+                }
+                else {
+                    stroke(255, 100);
+                    strokeWeight(1);
+                }
                 colorMode(HSL);
                 for (var i = 0; i < this.particles.length; i += 1) {
                     if (settings.coloring) {

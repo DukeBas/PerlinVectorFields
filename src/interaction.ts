@@ -69,6 +69,7 @@ function updateSettings(state: State) {
       settingsContainer.appendChild(createMaxSpeedSlider());
       settingsContainer.appendChild(createFieldStrengthSlider());
       settingsContainer.appendChild(createNoiseDetailSlider());
+      settingsContainer.appendChild(createNTrailsButtion());
       break;
     case "polygon":
       settingsContainer.appendChild(createNSystemSlider());
@@ -77,6 +78,7 @@ function updateSettings(state: State) {
       settingsContainer.appendChild(createPolygonSidelengthSlider());
       settingsContainer.appendChild(createPolygonStrengthSlider());
       settingsContainer.appendChild(createNoiseDetailSlider());
+      settingsContainer.appendChild(createNTrailsButtion());
       break;
   }
 }
@@ -120,6 +122,16 @@ function createSliderElement(
   SliderBox.appendChild(Slider);
 
   return SliderBox;
+}
+
+function createNTrailsButtion(): HTMLElement {
+  const button = document.createElement('button');
+  button.innerHTML = "Toggle persistency";
+  button.onclick = () => {
+    settings.nPersistency = !settings.nPersistency;
+    changedState();
+  }
+  return button;
 }
 
 function createParticleSystemSlider(): HTMLElement {

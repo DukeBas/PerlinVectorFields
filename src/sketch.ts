@@ -80,10 +80,10 @@ function draw() {
       particleSystem.updatePositions(grid, state);
       break;
     case "n-line":
-      nSystem.draw(state); 
-      nSystem.updatePositions(grid, state);
-      break;
     case "polygon":
+      if (!settings.nPersistency) {
+        background(0, 70);
+      }
       nSystem.draw(state);
       nSystem.updatePositions(grid, state);
       break;

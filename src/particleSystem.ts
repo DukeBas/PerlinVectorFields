@@ -87,13 +87,13 @@ class ParticleSystem {
 
   // adds or removes particles to get to a new number of particles in the simulation
   updateNumberOfParticles(newNum: number): void {
-    if (newNum > this.particles.length){
+    if (newNum > this.particles.length) {
       // add particles
-      for (let pToGo = newNum - this.particles.length; pToGo > 0; pToGo--){
+      for (let pToGo = newNum - this.particles.length; pToGo > 0; pToGo--) {
         let p = new Particle(randX(), randY());
         this.particles.push(p);
       }
-    } else if (newNum < this.particles.length){
+    } else if (newNum < this.particles.length) {
       // remove particles
       this.particles = this.particles.splice(0, newNum);
     }
@@ -146,8 +146,13 @@ class ParticleSystem {
         break;
       case "n-line":
         push();
-        stroke(255, 20);
-        strokeWeight(1);
+        if (settings.nPersistency) {
+          stroke(255, 20);
+          strokeWeight(1);
+        } else {
+          stroke(255, 100);
+          strokeWeight(2);
+        }
         colorMode(HSL)
         const numberOfLines = Math.floor(this.particles.length / 2);
         for (let i = 0; i < numberOfLines; i += 1) {
@@ -162,8 +167,13 @@ class ParticleSystem {
         break;
       case "polygon":
         push();
-        stroke(255, 20);
-        strokeWeight(1);
+        if (settings.nPersistency) {
+          stroke(255, 20);
+          strokeWeight(1);
+        } else {
+          stroke(255, 100);
+          strokeWeight(1);
+        }
         colorMode(HSL);
         for (let i = 0; i < this.particles.length; i += 1) {
           if (settings.coloring) {
