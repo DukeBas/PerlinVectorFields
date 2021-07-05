@@ -41,6 +41,12 @@ var Particle = (function () {
     Particle.prototype.getY = function () {
         return this.pos.y;
     };
+    Particle.prototype.getVelX = function () {
+        return this.vel.x;
+    };
+    Particle.prototype.getVelY = function () {
+        return this.vel.y;
+    };
     return Particle;
 }());
 var ParticleSystem = (function () {
@@ -61,6 +67,11 @@ var ParticleSystem = (function () {
                 stroke(255, 100);
                 strokeWeight(5);
                 this.particles.forEach(function (p) {
+                    if (settings.coloring) {
+                        var R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+                        var B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+                        stroke(R, 0, B, 255);
+                    }
                     p.draw(state);
                 });
                 pop();
@@ -70,6 +81,11 @@ var ParticleSystem = (function () {
                 stroke(255, 100);
                 strokeWeight(2);
                 this.particles.forEach(function (p) {
+                    if (settings.coloring) {
+                        var R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+                        var B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+                        stroke(R, 0, B, 100);
+                    }
                     p.draw(state);
                 });
                 pop();
@@ -79,6 +95,11 @@ var ParticleSystem = (function () {
                 stroke(255, 2);
                 strokeWeight(1);
                 this.particles.forEach(function (p) {
+                    if (settings.coloring) {
+                        var R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+                        var B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+                        stroke(R, 0, B, 3);
+                    }
                     p.draw(state);
                 });
                 pop();

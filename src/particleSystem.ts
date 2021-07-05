@@ -57,6 +57,14 @@ class Particle {
   getY(): number {
     return this.pos.y;
   }
+
+  getVelX(): number {
+    return this.vel.x;
+  }
+
+  getVelY(): number {
+    return this.vel.y;
+  }
 }
 
 class ParticleSystem {
@@ -85,6 +93,11 @@ class ParticleSystem {
         stroke(255, 100);
         strokeWeight(5);
         this.particles.forEach((p) => {
+          if (settings.coloring) {
+            const R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+            const B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+            stroke(R, 0, B, 255);
+          }
           p.draw(state);
         });
         pop();
@@ -94,6 +107,11 @@ class ParticleSystem {
         stroke(255, 100);
         strokeWeight(2);
         this.particles.forEach((p) => {
+          if (settings.coloring) {
+            const R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+            const B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+            stroke(R, 0, B, 100);
+          }
           p.draw(state);
         });
         pop();
@@ -103,6 +121,11 @@ class ParticleSystem {
         stroke(255, 2);
         strokeWeight(1);
         this.particles.forEach((p) => {
+          if (settings.coloring) {
+            const R = map(Math.abs(p.getVelX()), 0, settings.maxSpeed, 0, 255);
+            const B = map(Math.abs(p.getVelY()), 0, settings.maxSpeed, 0, 255);
+            stroke(R, 0, B, 3);
+          }
           p.draw(state);
         });
         pop();
@@ -180,7 +203,7 @@ class ParticleSystem {
         // add vectors to get total
         leftVector.add(rightVector)
 
-        // normalise length
+        // define maximum length vector
         leftVector.limit(settings.polygonStrength);
 
         // add vector to list
