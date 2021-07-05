@@ -85,6 +85,21 @@ class ParticleSystem {
     }
   }
 
+  // adds or removes particles to get to a new number of particles in the simulation
+  updateNumberOfParticles(newNum: number): void {
+    console.log(this)
+    if (newNum > this.particles.length){
+      // add particles
+      for (let pToGo = newNum - this.particles.length; pToGo > 0; pToGo--){
+        let p = new Particle(randX(), randY());
+        this.particles.push(p);
+      }
+    } else if (newNum < this.particles.length){
+      // remove particles
+      this.particles = this.particles.splice(0, newNum);
+    }
+  }
+
   // draw all the particles
   draw(state: State): void {
     switch (state) {

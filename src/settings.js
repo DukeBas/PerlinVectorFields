@@ -4,6 +4,8 @@ var settings = {
     numParticles: 1000,
     maxSpeed: 1.75,
     fieldStrength: 0.005,
+    minFieldStrength: 0.05,
+    maxFieldStrength: 1,
     polygonStrength: 0.05,
     noiseDifference: 3,
     noiseTimeResistance: 500,
@@ -14,7 +16,8 @@ var settings = {
     coloring: false,
     numberOfParticlesNSystem: 6,
     polygonSideLength: 100,
-    maxNumParticles: 10000,
+    minNumParticles: 0,
+    maxNumParticles: 5000,
     maxNumParticlesNSystem: 100,
     paused: false,
 };

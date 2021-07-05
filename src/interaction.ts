@@ -57,28 +57,75 @@ function updateSettings(state: State) {
   // add settings based on the current state
   switch (state) {
     case "particles":
-      // particle slider box to contain the slider and some text
-      const particleSliderBox = document.createElement('div');
-      particleSliderBox.innerText = "Particles" + ": ";
-      settingsContainer.appendChild(particleSliderBox);
-
-      // number of particles text
-      const particleText = document.createElement('span');
-      particleSliderBox.appendChild(particleText);
-
-      // add particle slider
-      const particleSlider = document.createElement('input');
-      particleSlider.type = "range";
-      particleSlider.min = "0";
-      particleSlider.max = settings.maxNumParticles.toString();
-      particleSlider.value = settings.numParticles.toString();
-      particleSlider.oninput = () => {
-        particleText.innerHTML = particleSlider.value;
-      }
-      settingsContainer.appendChild(particleSlider);
+      settingsContainer.appendChild(createParticleSystemSlider());
+      settingsContainer.appendChild(createFieldStrengthSlider());
 
       break;
   }
+}
+
+// create custom slider element
+function createSliderElement(
+  Name: string, // Word used above slider
+  // Name of setting that is altered by the slider
+  settingName: keyof typeof settings, 
+  minSliderValue: number,
+  maxSliderValue: number,
+  stepSize: number,
+  updateFunction: Function, // function to be called to put the setting into effect
+  ): HTMLElement {
+  // slider box to contain the slider and some text
+  const SliderBox = document.createElement('div');
+  SliderBox.innerText = Name + ": ";
+
+  // add text
+  const TextBox = document.createElement('span');
+  TextBox.innerHTML = settings[settingName].toString();
+  SliderBox.appendChild(TextBox);
+
+  // add  slider
+  const Slider = document.createElement('input');
+  Slider.type = "range";
+  Slider.min = minSliderValue.toString()
+  Slider.max = maxSliderValue.toString();
+  Slider.step = stepSize.toString();
+  Slider.value = settings[settingName].toString();
+  // update DOM element
+  Slider.oninput = () => {
+    TextBox.innerHTML = Slider.value;
+  }
+  // update simulation
+  Slider.onchange = () => {
+    const val = parseInt(Slider.value);
+    settings.numParticles = val;
+    updateFunction(val);
+  }
+  SliderBox.append(document.createElement('br'));
+  SliderBox.appendChild(Slider);
+
+  return SliderBox;
+}
+
+function createParticleSystemSlider(): HTMLElement {
+  return createSliderElement(
+    "Number of particles",
+    "numParticles",
+    settings.minNumParticles,
+    settings.maxNumParticles,
+    1,
+    (val: number) => {particleSystem.updateNumberOfParticles(val)}
+  )
+}
+
+function createFieldStrengthSlider(): HTMLElement {
+  return createSliderElement(
+    "Field strength",
+    "fieldStrength",
+    settings.minFieldStrength,
+    settings.maxFieldStrength,
+    0.001,
+    (val: number) => {settings.fieldStrength = val}
+  )
 }
 
 // called when time shift button is clicked

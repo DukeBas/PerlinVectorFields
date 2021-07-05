@@ -60,6 +60,18 @@ var ParticleSystem = (function () {
             this.particles.push(p);
         }
     };
+    ParticleSystem.prototype.updateNumberOfParticles = function (newNum) {
+        console.log(this);
+        if (newNum > this.particles.length) {
+            for (var pToGo = newNum - this.particles.length; pToGo > 0; pToGo--) {
+                var p = new Particle(randX(), randY());
+                this.particles.push(p);
+            }
+        }
+        else if (newNum < this.particles.length) {
+            this.particles = this.particles.splice(0, newNum);
+        }
+    };
     ParticleSystem.prototype.draw = function (state) {
         switch (state) {
             case "particles":
