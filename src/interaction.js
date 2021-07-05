@@ -44,6 +44,7 @@ function updateSettings(state) {
 function createSliderElement(Name, settingName, minSliderValue, maxSliderValue, stepSize, updateFunction) {
     var SliderBox = document.createElement('div');
     SliderBox.innerText = Name + ": ";
+    SliderBox.id = settingName;
     var TextBox = document.createElement('span');
     TextBox.innerHTML = settings[settingName].toString();
     SliderBox.appendChild(TextBox);
@@ -53,12 +54,13 @@ function createSliderElement(Name, settingName, minSliderValue, maxSliderValue, 
     Slider.max = maxSliderValue.toString();
     Slider.step = stepSize.toString();
     Slider.value = settings[settingName].toString();
+    console.log(settingName, Slider.value, settings[settingName].toString());
+    console.log(settings);
     Slider.oninput = function () {
         TextBox.innerHTML = Slider.value;
     };
     Slider.onchange = function () {
         var val = parseFloat(Slider.value);
-        settings.numParticles = val;
         updateFunction(val);
     };
     SliderBox.append(document.createElement('br'));
@@ -66,7 +68,10 @@ function createSliderElement(Name, settingName, minSliderValue, maxSliderValue, 
     return SliderBox;
 }
 function createParticleSystemSlider() {
-    return createSliderElement("Number of particles", "numParticles", settings.minNumParticles, settings.maxNumParticles, 1, function (val) { particleSystem.updateNumberOfParticles(val); });
+    return createSliderElement("Number of particles", "numParticles", settings.minNumParticles, settings.maxNumParticles, 1, function (val) {
+        settings.numParticles = val;
+        particleSystem.updateNumberOfParticles(val);
+    });
 }
 function createFieldStrengthSlider() {
     return createSliderElement("Field strength", "fieldStrength", settings.minFieldStrength, settings.maxFieldStrength, 0.001, function (val) { settings.fieldStrength = val; });

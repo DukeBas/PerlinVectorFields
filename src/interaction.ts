@@ -78,6 +78,7 @@ function createSliderElement(
   // slider box to contain the slider and some text
   const SliderBox = document.createElement('div');
   SliderBox.innerText = Name + ": ";
+  SliderBox.id = settingName;
 
   // add text
   const TextBox = document.createElement('span');
@@ -91,6 +92,8 @@ function createSliderElement(
   Slider.max = maxSliderValue.toString();
   Slider.step = stepSize.toString();
   Slider.value = settings[settingName].toString();
+  console.log(settingName, Slider.value, settings[settingName].toString())
+  console.log(settings)
   // update DOM element
   Slider.oninput = () => {
     TextBox.innerHTML = Slider.value;
@@ -98,7 +101,6 @@ function createSliderElement(
   // update simulation
   Slider.onchange = () => {
     const val = parseFloat(Slider.value);
-    settings.numParticles = val;
     updateFunction(val);
   }
   SliderBox.append(document.createElement('br'));
@@ -114,7 +116,10 @@ function createParticleSystemSlider(): HTMLElement {
     settings.minNumParticles,
     settings.maxNumParticles,
     1,
-    (val: number) => {particleSystem.updateNumberOfParticles(val)}
+    (val: number) => {
+      settings.numParticles = val;
+      particleSystem.updateNumberOfParticles(val);
+    }
   )
 }
 function createFieldStrengthSlider(): HTMLElement {
@@ -124,7 +129,7 @@ function createFieldStrengthSlider(): HTMLElement {
     settings.minFieldStrength,
     settings.maxFieldStrength,
     0.001,
-    (val: number) => {settings.fieldStrength = val}
+    (val: number) => {settings.fieldStrength = val;}
   )
 }
 function createMaxSpeedSlider(): HTMLElement {
@@ -134,7 +139,7 @@ function createMaxSpeedSlider(): HTMLElement {
     settings.minMaxSpeed,
     settings.maxMaxSpeed,
     0.1,
-    (val: number) => {settings.maxSpeed = val}
+    (val: number) => {settings.maxSpeed = val;}
   )
 }
 
